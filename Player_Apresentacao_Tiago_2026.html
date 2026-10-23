@@ -339,64 +339,81 @@
       border-color: var(--primary);
     }
 
-    /* FULLSCREEN NATIVO */
+    /* BOTÃO DISCRETO PARA VOLTAR DA TELA CHEIA */
+    .fs-exit-btn {
+      display: none;
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      top: max(14px, env(safe-area-inset-top, 14px));
+      right: max(14px, env(safe-area-inset-right, 14px));
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(18, 19, 22, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: rgba(255, 255, 255, 0.88);
+      cursor: pointer;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      padding: 0;
+    }
+    .fs-exit-btn:hover {
+      background: rgba(30, 41, 59, 0.92);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #fff;
+      transform: scale(1.06);
+    }
+    .fs-exit-btn:active {
+      transform: scale(0.92);
+      background: rgba(239, 68, 68, 0.85);
+    }
+
+    /* FULLSCREEN SEM AVISOS INTRUSIVOS */
+    .visual-box.is-fullscreen,
     .visual-box:fullscreen,
     .visual-box:-webkit-full-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
+      max-height: none !important;
       border: none;
       border-radius: 0;
       background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 99999;
     }
     .visual-box:fullscreen img,
-    .visual-box:-webkit-full-screen img {
+    .visual-box:-webkit-full-screen img,
+    .visual-box.is-fullscreen img {
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
+      max-height: none !important;
       object-fit: contain;
     }
+    .visual-box:fullscreen .fullscreen-btn,
+    .visual-box:-webkit-full-screen .fullscreen-btn,
+    .visual-box.is-fullscreen .fullscreen-btn {
+      display: none !important;
+    }
+    .visual-box:fullscreen .fs-exit-btn,
+    .visual-box:-webkit-full-screen .fs-exit-btn,
+    .visual-box.is-fullscreen .fs-exit-btn {
+      display: flex !important;
+    }
     .fs-hud {
-      display: none;
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(18, 19, 22, 0.92);
-      border: 1px solid rgba(48, 131, 255, 0.3);
-      padding: 8px 20px;
-      border-radius: var(--radius-pill);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-      align-items: center;
-      gap: 14px;
-      z-index: 50;
-    }
-    .visual-box:fullscreen .fs-hud,
-    .visual-box:-webkit-full-screen .fs-hud {
-      display: flex;
-    }
-    .fs-hud-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #93c5fd;
-      max-width: 260px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .fs-hud button {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      color: #fff;
-      padding: 6px 12px;
-      font-size: 0.82rem;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-    }
-    .fs-hud button:hover {
-      background: var(--primary);
+      display: none !important;
     }
 
     /* SCRIPT BOX */
@@ -500,12 +517,49 @@
       background: var(--bg-surface-hover);
       border-color: var(--border-strong);
     }
+    /* BOTÕES DE PLAY/PAUSE (DESIGN SYSTEM HERO ACTION) */
     button.btn-ctrl.primary {
-      background: var(--primary);
-      border-color: var(--primary);
+      background: linear-gradient(135deg, #3083FF 0%, #155DFC 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 14px rgba(48, 131, 255, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
     button.btn-ctrl.primary:hover {
-      background: var(--primary-hover);
+      background: linear-gradient(135deg, #4491FF 0%, #1F66FF 100%);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 6px 20px rgba(48, 131, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+    button.btn-ctrl.primary:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 2px 8px rgba(48, 131, 255, 0.4);
+    }
+
+    /* ESTADO EM REPRODUÇÃO ATIVA (IS-PLAYING / PAUSAR) */
+    button.btn-ctrl.primary.is-playing {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-color: rgba(254, 243, 199, 0.3);
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      animation: audioPulse 2.4s infinite ease-in-out;
+    }
+    button.btn-ctrl.primary.is-playing:hover {
+      background: linear-gradient(135deg, #fbbf24 0%, #b45309 100%);
+      border-color: rgba(254, 243, 199, 0.45);
+      box-shadow: 0 6px 22px rgba(245, 158, 11, 0.55);
+      transform: translateY(-1px);
+    }
+
+    @keyframes audioPulse {
+      0%, 100% {
+        box-shadow: 0 4px 14px rgba(245, 158, 11, 0.38);
+      }
+      50% {
+        box-shadow: 0 4px 22px rgba(245, 158, 11, 0.65);
+      }
     }
     button.btn-speed {
       background: var(--bg-surface);
@@ -806,16 +860,13 @@
           <button id="btnFsToggle" class="fullscreen-btn" title="Tela Cheia (F)">
             ⛶ Tela Cheia
           </button>
-          <img id="slideImg" src="" alt="Slide da Apresentação" title="Clique duas vezes para Tela Cheia">
-          
-          <!-- HUD EM TELA CHEIA -->
-          <div id="fsHud" class="fs-hud">
-            <button id="btnFsPrev" title="Anterior">⏮️</button>
-            <button id="btnFsPlay" title="Reproduzir / Pausar">▶️</button>
-            <button id="btnFsNext" title="Próximo">⏭️</button>
-            <span id="fsHudTitle" class="fs-hud-title">Slide 1 / 84</span>
-            <button id="btnFsExit" title="Sair">✕ Sair</button>
-          </div>
+          <button id="btnFsExit" class="fs-exit-btn" aria-label="Fechar tela cheia">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <img id="slideImg" src="" alt="Slide da Apresentação">
         </div>
 
         <!-- CONTROLES MOBILE TOUCH (LOGO ABAIXO DO SLIDE) -->
@@ -840,11 +891,11 @@
           </div>
         </div>
 
-        <!-- QUADRO DO ROTEIRO DO TIAGO (ROLAGEM INDEPENDENTE) -->
+        <!-- QUADRO DA TRANSCRIÇÃO DA APRESENTAÇÃO (ROLAGEM INDEPENDENTE) -->
         <div class="script-box">
           <div class="script-header">
             <div class="script-header-badge">
-              <span>🎙️ ROTEIRO DO TIAGO (1ª PESSOA • FALA DINÂMICA)</span>
+              <span>Transcrição da Apresentação</span>
             </div>
             <span id="slideIndicatorHeader" style="color: var(--text-muted); font-size: 0.78rem;">1 / 84</span>
           </div>
@@ -856,7 +907,7 @@
 
   <!-- FLOATING CTA BAR (MOBILE) -->
   <div class="mobile-floating-bar">
-    <a id="btnMobWhatsApp" href="https://wa.me/?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
+    <a id="btnMobWhatsApp" href="https://wa.me/554988110688?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
       <span>Responder no WhatsApp com Decisão</span>
     </a>
@@ -891,7 +942,7 @@
 
       <span class="desk-partner-note">Criado por Parceiro</span>
 
-      <a id="btnDeskWhatsApp" href="https://wa.me/?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
+      <a id="btnDeskWhatsApp" href="https://wa.me/554988110688?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
         <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
         <span>Falar no WhatsApp</span>
       </a>
@@ -979,7 +1030,7 @@
       scriptContent.scrollTop = 0;
 
       const slideTitleStr = `${s.slide_number}/84 • ${s.title || 'Slide ' + s.slide_number}`;
-      fsHudTitle.textContent = slideTitleStr;
+      if (fsHudTitle) fsHudTitle.textContent = slideTitleStr;
       mobileSlideCount.textContent = `Slide ${s.slide_number}/84`;
       slideIndicatorHeader.textContent = `${s.slide_number} / 84`;
 
@@ -1011,7 +1062,15 @@
       const mobPlayText = isPlaying ? '⏸️ Pause' : '▶️ Play';
       btnPlay.textContent = playText;
       btnMobPlay.textContent = mobPlayText;
-      btnFsPlay.textContent = isPlaying ? '⏸️' : '▶️';
+      if (btnFsPlay) btnFsPlay.textContent = isPlaying ? '⏸️' : '▶️';
+
+      if (isPlaying) {
+        btnPlay.classList.add('is-playing');
+        btnMobPlay.classList.add('is-playing');
+      } else {
+        btnPlay.classList.remove('is-playing');
+        btnMobPlay.classList.remove('is-playing');
+      }
     }
 
     function togglePlay() {
@@ -1122,32 +1181,67 @@
     btnCloseSidebar.addEventListener('click', closeDrawer);
     drawerBackdrop.addEventListener('click', closeDrawer);
 
-    // Fullscreen Handlers
+    // Fullscreen limpo e sem avisos intrusivos do navegador
     function toggleFullscreen() {
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        if (visualBox.requestFullscreen) {
-          visualBox.requestFullscreen();
-        } else if (visualBox.webkitRequestFullscreen) {
-          visualBox.webkitRequestFullscreen();
-        }
+      const isFs = visualBox.classList.contains('is-fullscreen') || document.fullscreenElement || document.webkitFullscreenElement;
+      if (!isFs) {
+        visualBox.classList.add('is-fullscreen');
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
+        visualBox.classList.remove('is-fullscreen');
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+          if (document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          }
         }
       }
     }
 
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        visualBox.classList.remove('is-fullscreen');
+      }
+    });
+    document.addEventListener('webkitfullscreenchange', () => {
+      if (!document.webkitFullscreenElement) {
+        visualBox.classList.remove('is-fullscreen');
+      }
+    });
+
     btnFullscreen.addEventListener('click', toggleFullscreen);
     btnFsToggle.addEventListener('click', toggleFullscreen);
-    btnFsExit.addEventListener('click', toggleFullscreen);
+    if (btnFsExit) btnFsExit.addEventListener('click', toggleFullscreen);
     if (btnMobFs) btnMobFs.addEventListener('click', toggleFullscreen);
     visualBox.addEventListener('dblclick', toggleFullscreen);
 
-    btnFsPrev.addEventListener('click', () => prevSlide(true));
-    btnFsNext.addEventListener('click', () => nextSlide(true));
-    btnFsPlay.addEventListener('click', togglePlay);
+    if (btnFsPrev) btnFsPrev.addEventListener('click', () => prevSlide(true));
+    if (btnFsNext) btnFsNext.addEventListener('click', () => nextSlide(true));
+    if (btnFsPlay) btnFsPlay.addEventListener('click', togglePlay);
+
+    // Navegação por gestos de deslize (swipe touch) nos slides no mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+    visualBox.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    visualBox.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length === 1) {
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0) {
+            nextSlide(true);
+          } else {
+            prevSlide(true);
+          }
+        }
+      }
+    }, { passive: true });
 
     // Atalhos de Teclado
     window.addEventListener('keydown', (e) => {
@@ -1164,6 +1258,11 @@
       } else if (e.code === 'KeyF') {
         e.preventDefault();
         toggleFullscreen();
+      } else if (e.code === 'Escape' || e.key === 'Escape') {
+        if (visualBox.classList.contains('is-fullscreen') || document.fullscreenElement) {
+          e.preventDefault();
+          toggleFullscreen();
+        }
       }
     });
 
