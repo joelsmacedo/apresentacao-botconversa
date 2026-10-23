@@ -665,7 +665,7 @@
     .speed-popover {
       position: fixed;
       z-index: 1000;
-      width: 310px;
+      width: 280px;
       background: rgba(18, 19, 22, 0.96);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-lg);
@@ -1317,7 +1317,7 @@
     </a>
   </div>
 
-  <!-- BACKDROP E POPOVER DE VELOCIDADE AVANÇADA (TSM) -->
+  <!-- BACKDROP E POPOVER DE VELOCIDADE (0.75x, 1x, 1.25x, 1.5x) -->
   <div id="speedMenuBackdrop" class="speed-menu-backdrop"></div>
   <div id="speedMenu" class="speed-popover" role="dialog" aria-label="Opções de Velocidade de Reprodução">
     <div class="speed-popover-header">
@@ -1331,35 +1331,18 @@
       <button id="btnCloseSpeedMenu" class="speed-menu-close" title="Fechar menu">✕</button>
     </div>
 
-    <!-- PRESETS RÁPIDOS (1-TOQUE) -->
+    <!-- PRESETS EXCLUSIVOS: 0.75x, 1x, 1.25x, 1.5x -->
     <div class="speed-presets-grid">
-      <button type="button" class="speed-preset-btn" data-speed="0.5">0.5x</button>
       <button type="button" class="speed-preset-btn" data-speed="0.75">0.75x</button>
       <button type="button" class="speed-preset-btn active" data-speed="1.0">1.0x <span>Normal</span></button>
       <button type="button" class="speed-preset-btn" data-speed="1.25">1.25x</button>
       <button type="button" class="speed-preset-btn" data-speed="1.5">1.5x</button>
-      <button type="button" class="speed-preset-btn" data-speed="1.75">1.75x</button>
-      <button type="button" class="speed-preset-btn" data-speed="2.0">2.0x</button>
-      <button type="button" class="speed-preset-btn" data-speed="2.5">2.5x</button>
-    </div>
-
-    <!-- AJUSTE FINO CONTÍNUO (STEP 0.05x / 0.1x) -->
-    <div class="speed-stepper-row">
-      <div class="stepper-header">
-        <span>Ajuste de Precisão</span>
-        <span id="fineSpeedDisplay" class="fine-speed-display">1.00x</span>
-      </div>
-      <div class="stepper-controls">
-        <button type="button" id="btnSpeedMinus" class="stepper-btn" title="Diminuir 0.1x" aria-label="Diminuir velocidade">−</button>
-        <input type="range" id="speedSlider" min="0.5" max="3.0" step="0.05" value="1.0" class="speed-range-slider" aria-label="Controle deslizante de velocidade">
-        <button type="button" id="btnSpeedPlus" class="stepper-btn" title="Aumentar 0.1x" aria-label="Aumentar velocidade">+</button>
-      </div>
     </div>
 
     <!-- RODAPÉ E ATALHOS -->
     <div class="speed-popover-footer">
-      <span class="speed-shortcut-hint">Atalhos: <b>&lt;</b> e <b>&gt;</b> ou <b>[</b> e <b>]</b></span>
-      <button type="button" id="btnResetSpeed" class="speed-reset-btn" title="Redefinir para 1.0x">Resetar (1.0x)</button>
+      <span class="speed-shortcut-hint">Atalhos: <b>&lt;</b> e <b>&gt;</b></span>
+      <button type="button" id="btnResetSpeed" class="speed-reset-btn" title="Redefinir para 1.0x">Padrão (1.0x)</button>
     </div>
   </div>
 
@@ -1412,13 +1395,13 @@
       const savedSpeed = localStorage.getItem('botconversa_playback_speed');
       if (savedSpeed) {
         const parsed = parseFloat(savedSpeed);
-        if (!isNaN(parsed) && parsed >= 0.5 && parsed <= 3.0) {
+        if (speedPresets.includes(parsed)) {
           currentSpeed = parsed;
         }
       }
     } catch (e) {}
 
-    const speedPresets = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5];
+    const speedPresets = [0.75, 1.0, 1.25, 1.5];
 
     // Elementos DOM
     const audioPlayer = document.getElementById('audioPlayer');
@@ -1623,7 +1606,9 @@
     }
 
     function applyPlaybackSpeed(speed, showOsd = true) {
-      speed = Math.max(0.5, Math.min(3.0, Math.round(speed * 100) / 100));
+      if (!speedPresets.includes(speed)) {
+        speed = speedPresets.reduce((prev, curr) => Math.abs(curr - speed) < Math.abs(prev - speed) ? curr : prev);
+      }
       currentSpeed = speed;
 
       // 1. Aplicação nativa com Time-Scale Modification (TSM)
@@ -1677,7 +1662,7 @@
     function openSpeedMenu(anchorEl) {
       if (anchorEl) {
         const rect = anchorEl.getBoundingClientRect();
-        const popoverWidth = 310;
+        const popoverWidth = 280;
         const isMobile = window.innerWidth <= 850;
 
         if (isMobile) {
@@ -1715,25 +1700,22 @@
     }
 
     function stepSpeedPreset(dir) {
-      let targetIdx = 0;
-      if (dir > 0) {
-        const found = speedPresets.findIndex(s => s > currentSpeed + 0.02);
-        targetIdx = found !== -1 ? found : speedPresets.length - 1;
+      const idx = speedPresets.indexOf(currentSpeed);
+      let targetIdx;
+      if (idx === -1) {
+        targetIdx = 1; // 1.0x
+      } else if (dir > 0) {
+        targetIdx = Math.min(speedPresets.length - 1, idx + 1);
       } else {
-        let found = -1;
-        for (let i = speedPresets.length - 1; i >= 0; i--) {
-          if (speedPresets[i] < currentSpeed - 0.02) {
-            found = i;
-            break;
-          }
-        }
-        targetIdx = found !== -1 ? found : 0;
+        targetIdx = Math.max(0, idx - 1);
       }
       applyPlaybackSpeed(speedPresets[targetIdx], true);
     }
 
     function cycleSpeed() {
-      stepSpeedPreset(1);
+      const idx = speedPresets.indexOf(currentSpeed);
+      const nextIdx = idx === -1 ? 1 : (idx + 1) % speedPresets.length;
+      applyPlaybackSpeed(speedPresets[nextIdx], true);
     }
 
     function openDrawer() {
@@ -1861,13 +1843,13 @@
 
     if (btnSpeedMinus) {
       btnSpeedMinus.addEventListener('click', () => {
-        applyPlaybackSpeed(currentSpeed - 0.1, true);
+        stepSpeedPreset(-1);
       });
     }
 
     if (btnSpeedPlus) {
       btnSpeedPlus.addEventListener('click', () => {
-        applyPlaybackSpeed(currentSpeed + 0.1, true);
+        stepSpeedPreset(1);
       });
     }
 
@@ -2036,10 +2018,10 @@
         stepSpeedPreset(-1);
       } else if (e.key === ']' || e.code === 'BracketRight') {
         e.preventDefault();
-        applyPlaybackSpeed(currentSpeed + 0.1, true);
+        stepSpeedPreset(1);
       } else if (e.key === '[' || e.code === 'BracketLeft') {
         e.preventDefault();
-        applyPlaybackSpeed(currentSpeed - 0.1, true);
+        stepSpeedPreset(-1);
       } else if (e.code === 'KeyS' && !e.ctrlKey && !e.metaKey) {
         e.preventDefault();
         toggleSpeedMenu(btnSpeed);
