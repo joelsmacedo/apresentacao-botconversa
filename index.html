@@ -423,6 +423,7 @@
       top: 0;
       left: 0;
       width: 100vw;
+      width: 100dvw;
       height: 100vh;
       height: 100dvh;
       max-height: none !important;
@@ -433,6 +434,13 @@
       align-items: center;
       justify-content: center;
       z-index: 99999;
+      box-sizing: border-box;
+    }
+    .visual-box::backdrop {
+      background: #000;
+    }
+    .visual-box::-webkit-backdrop {
+      background: #000;
     }
     .visual-box:fullscreen img,
     .visual-box:-webkit-full-screen img,
@@ -456,6 +464,21 @@
     .visual-box:-webkit-full-screen .fs-speed-btn,
     .visual-box.is-fullscreen .fs-speed-btn {
       display: flex !important;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.2s ease;
+    }
+    /* APARECEM SOMENTE AO PAUSAR EM TELA CHEIA */
+    .visual-box.is-fullscreen.is-paused .fs-exit-btn,
+    .visual-box.is-fullscreen.is-paused .fs-speed-btn,
+    .visual-box:fullscreen.is-paused .fs-exit-btn,
+    .visual-box:fullscreen.is-paused .fs-speed-btn,
+    .visual-box:-webkit-full-screen.is-paused .fs-exit-btn,
+    .visual-box:-webkit-full-screen.is-paused .fs-speed-btn {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      visibility: visible !important;
     }
     .fs-hud {
       display: none !important;
@@ -1531,9 +1554,12 @@
       if (isPlaying) {
         btnPlay.classList.add('is-playing');
         btnMobPlay.classList.add('is-playing');
+        visualBox.classList.remove('is-paused');
+        if (typeof closeSpeedMenu === 'function') closeSpeedMenu();
       } else {
         btnPlay.classList.remove('is-playing');
         btnMobPlay.classList.remove('is-playing');
+        visualBox.classList.add('is-paused');
       }
     }
 
@@ -1761,6 +1787,10 @@
     audioPlayer.addEventListener('play', () => {
       audioPlayer.playbackRate = currentSpeed;
       enforcePitchPreservation();
+      updatePlayButtonsState(true);
+    });
+    audioPlayer.addEventListener('pause', () => {
+      updatePlayButtonsState(false);
     });
 
     audioPlayer.addEventListener('ended', () => {
@@ -1863,32 +1893,86 @@
     btnCloseSidebar.addEventListener('click', closeDrawer);
     drawerBackdrop.addEventListener('click', closeDrawer);
 
-    // Fullscreen limpo e sem avisos intrusivos do navegador
-    function toggleFullscreen() {
-      const isFs = visualBox.classList.contains('is-fullscreen') || document.fullscreenElement || document.webkitFullscreenElement;
+    // Fullscreen imersivo nativo com auto-rotação para paisagem (landscape) no mobile
+    async function toggleFullscreen() {
+      const isFs = visualBox.classList.contains('is-fullscreen') || 
+                   !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+
       if (!isFs) {
         visualBox.classList.add('is-fullscreen');
+
+        // 1. Solicita tela cheia nativa para ocultar completamente a barra de endereço e controles do navegador
+        try {
+          const req = visualBox.requestFullscreen || visualBox.webkitRequestFullscreen || visualBox.mozRequestFullScreen || visualBox.msRequestFullscreen || document.documentElement.requestFullscreen;
+          if (req) {
+            const p = req.call(visualBox, { navigationUI: 'hide' });
+            if (p && p.then) await p.catch(() => {});
+          }
+        } catch (err) {
+          console.warn('Erro ao solicitar tela cheia nativa:', err);
+        }
+
+        // 2. Gira e trava a tela automaticamente no modo paisagem (landscape) no mobile
+        try {
+          if (screen.orientation && typeof screen.orientation.lock === 'function') {
+            await screen.orientation.lock('landscape').catch(() => {});
+          } else if (screen.lockOrientation) {
+            screen.lockOrientation('landscape');
+          } else if (screen.mozLockOrientation) {
+            screen.mozLockOrientation('landscape');
+          } else if (screen.msLockOrientation) {
+            screen.msLockOrientation('landscape');
+          }
+        } catch (err) {
+          console.warn('Orientação paisagem não suportada ou bloqueada pelo dispositivo:', err);
+        }
       } else {
         visualBox.classList.remove('is-fullscreen');
-        if (document.fullscreenElement || document.webkitFullscreenElement) {
-          if (document.exitFullscreen) {
-            document.exitFullscreen().catch(() => {});
-          } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
+
+        // 1. Destrava a orientação para retornar ao modo padrão do dispositivo
+        try {
+          if (screen.orientation && typeof screen.orientation.unlock === 'function') {
+            screen.orientation.unlock();
+          } else if (screen.unlockOrientation) {
+            screen.unlockOrientation();
+          } else if (screen.mozUnlockOrientation) {
+            screen.mozUnlockOrientation();
+          } else if (screen.msUnlockOrientation) {
+            screen.msUnlockOrientation();
           }
-        }
+        } catch (err) {}
+
+        // 2. Sai do modo de tela cheia nativo do navegador
+        try {
+          if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+            const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+            if (exit) {
+              const p = exit.call(document);
+              if (p && p.then) await p.catch(() => {});
+            }
+          }
+        } catch (err) {}
       }
     }
 
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
+    function handleFullscreenExit() {
+      const isFsNative = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+      if (!isFsNative) {
         visualBox.classList.remove('is-fullscreen');
+        try {
+          if (screen.orientation && typeof screen.orientation.unlock === 'function') {
+            screen.orientation.unlock();
+          } else if (screen.unlockOrientation) {
+            screen.unlockOrientation();
+          }
+        } catch (e) {}
+      } else {
+        visualBox.classList.add('is-fullscreen');
       }
-    });
-    document.addEventListener('webkitfullscreenchange', () => {
-      if (!document.webkitFullscreenElement) {
-        visualBox.classList.remove('is-fullscreen');
-      }
+    }
+
+    ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+      document.addEventListener(evt, handleFullscreenExit);
     });
 
     if (btnFullscreen) btnFullscreen.addEventListener('click', toggleFullscreen);
@@ -2031,7 +2115,8 @@
       }
     });
 
-    // Inicialização com velocidade salva e pitch garantido
+    // Inicialização com estado pausado e velocidade garantida
+    visualBox.classList.add('is-paused');
     applyPlaybackSpeed(currentSpeed, false);
     loadSlide(0, false);
   </script>
