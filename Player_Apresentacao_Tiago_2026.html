@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>BotConversa • Apresentação de Vendas 2026</title>
+  <link rel="icon" type="image/png" href="botconversa_mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #3083FF;
+      --primary-hover: #1e70ea;
+      --primary-light: rgba(48, 131, 255, 0.12);
+      --brand-green: #28C765;
+      --brand-green-hover: #22b157;
+      --brand-green-light: rgba(40, 199, 101, 0.16);
+
+      --bg-dark: #0a0a0c;
+      --bg-card: #121316;
+      --bg-surface: #161619;
+      --bg-surface-hover: #212127;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.15);
+
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+
+      --font-family: 'Inter Tight', 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-pill: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      font-family: var(--font-family);
+      background: var(--bg-dark);
+      color: var(--text-main);
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Scrollbars elegantes */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-pill);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* HEADER */
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 30;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+    .brand-logo-img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      border-radius: var(--radius-sm);
+    }
+    .brand-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-left: 1px solid var(--border);
+      padding-left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .brand-title span {
+      color: #fff;
+      font-weight: 700;
+    }
+    .partner-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .sidebar-footer {
+      padding: 10px 14px;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      background: var(--bg-card);
+      flex-shrink: 0;
+    }
+    .desk-partner-note {
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      border-left: 1px solid var(--border);
+      padding-left: 12px;
+      white-space: nowrap;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-tiago {
+      background: var(--primary-light);
+      border: 1px solid rgba(48, 131, 255, 0.3);
+      color: #93c5fd;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .btn-drawer-toggle {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-drawer-toggle:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--primary);
+    }
+
+    /* MAIN WRAPPER */
+    main {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* SIDEBAR (DESKTOP) & DRAWER (MOBILE) */
+    .sidebar {
+      width: 320px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 40;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sidebar-header {
+      padding: 14px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg-card);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sidebar-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: none;
+      padding: 4px;
+    }
+    .slide-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .slide-item:hover {
+      background: var(--bg-surface-hover);
+    }
+    .slide-item.active {
+      background: var(--primary-light);
+      border-left: 3px solid var(--primary);
+    }
+    .slide-badge {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: 32px;
+      text-align: center;
+      color: #93c5fd;
+    }
+    .slide-item.active .slide-badge {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .slide-info {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+
+    /* DRAWER OVERLAY (MOBILE) */
+    .drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 35;
+    }
+    .drawer-backdrop.active {
+      display: block;
+    }
+
+    /* CONTENT AREA */
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 24px;
+      overflow: hidden;
+      min-height: 0;
+      height: 100%;
+    }
+    .visual-and-script {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+      gap: 20px;
+      flex: 1;
+      min-height: 0;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    /* VISUAL BOX (SLIDE) */
+    .visual-box {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      height: 100%;
+      max-height: 100%;
+      min-height: 0;
+    }
+    .visual-box img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      cursor: zoom-in;
+    }
+    .fullscreen-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(18, 19, 22, 0.85);
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      backdrop-filter: blur(8px);
+      transition: all 0.15s ease;
+      z-index: 20;
+    }
+    .fullscreen-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* FULLSCREEN NATIVO */
+    .visual-box:fullscreen,
+    .visual-box:-webkit-full-screen {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      border-radius: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .visual-box:fullscreen img,
+    .visual-box:-webkit-full-screen img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+    }
+    .fs-hud {
+      display: none;
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(18, 19, 22, 0.92);
+      border: 1px solid rgba(48, 131, 255, 0.3);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      align-items: center;
+      gap: 14px;
+      z-index: 50;
+    }
+    .visual-box:fullscreen .fs-hud,
+    .visual-box:-webkit-full-screen .fs-hud {
+      display: flex;
+    }
+    .fs-hud-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #93c5fd;
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .fs-hud button {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .fs-hud button:hover {
+      background: var(--primary);
+    }
+
+    /* SCRIPT BOX */
+    .script-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+      position: relative;
+      height: 100%;
+      max-height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .script-header {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .script-header-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .script-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      flex: 1;
+      min-height: 0;
+      padding-right: 6px;
+    }
+
+    /* CONTROLES MOBILE INLINE (APARECEM APENAS NO CELULAR ABAIXO DO SLIDE) */
+    .mobile-player-bar {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .mobile-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .mobile-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* FOOTER (DESKTOP) */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-shrink: 0;
+      z-index: 30;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    button.btn-ctrl {
+      background: var(--bg-surface);
+      color: white;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    button.btn-ctrl:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--border-strong);
+    }
+    button.btn-ctrl.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    button.btn-ctrl.primary:hover {
+      background: var(--primary-hover);
+    }
+    button.btn-speed {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: #93c5fd;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.btn-speed:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    /* PROGRESS BAR */
+    .playback-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+    .time-display {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: monospace;
+      min-width: 42px;
+    }
+    .progress-bar-container {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-pill);
+      position: relative;
+      cursor: pointer;
+      transition: height 0.15s ease;
+    }
+    .progress-bar-container:hover {
+      height: 8px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      border-radius: var(--radius-pill);
+      width: 0%;
+      position: relative;
+      transition: width 0.1s linear;
+    }
+    .progress-bar::after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .progress-bar-container:hover .progress-bar::after {
+      opacity: 1;
+    }
+
+    /* WHATSAPP CTA BUTTON */
+    .whatsapp-cta-btn {
+      background: var(--brand-green);
+      color: #fff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(40, 199, 101, 0.35);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .whatsapp-cta-btn:hover {
+      background: var(--brand-green-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(40, 199, 101, 0.45);
+    }
+    .whatsapp-cta-btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* SWITCH TOGGLE */
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #334155;
+      transition: .3s;
+      border-radius: 22px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--primary); }
+    input:checked + .slider:before { transform: translateX(18px); }
+
+    /* MOBILE FLOATING CTA BAR */
+    .mobile-floating-bar {
+      display: none;
+      background: rgba(18, 19, 22, 0.95);
+      border-top: 1px solid var(--border);
+      padding: 10px 14px;
+      backdrop-filter: blur(12px);
+      z-index: 30;
+      flex-shrink: 0;
+    }
+    .mobile-floating-bar .whatsapp-cta-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+    }
+
+    /* RESPONSIVIDADE MOBILE (SMARTPHONES E TABLETS VERTICAIS) */
+    @media (max-width: 850px) {
+      header {
+        padding: 8px 12px;
+      }
+      .brand-title {
+        display: flex;
+        font-size: 0.78rem;
+        padding-left: 8px;
+        gap: 6px;
+      }
+      .partner-tag {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+      }
+      .brand-logo-img {
+        height: 26px;
+      }
+      .badge-tiago {
+        font-size: 0.72rem;
+        padding: 3px 8px;
+      }
+      @media (max-width: 520px) {
+        .badge-tiago {
+          display: none;
+        }
+      }
+      .btn-drawer-toggle {
+        display: inline-flex;
+      }
+
+      /* SIDEBAR VIRA DRAWER OFF-CANVAS */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 82%;
+        max-width: 340px;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .sidebar-close-btn {
+        display: block;
+      }
+
+      /* CONTENT AREA COMPACTA NO CELULAR */
+      .content-area {
+        padding: 10px 10px 6px;
+        gap: 8px;
+      }
+      .visual-and-script {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* SLIDE TRAVADO NO TOPO COM 16:9 PERFEITO */
+      .visual-box {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        height: auto;
+        max-height: 30vh;
+        flex-shrink: 0;
+        border-radius: var(--radius-md);
+      }
+      .fullscreen-btn {
+        padding: 4px 8px;
+        font-size: 0.72rem;
+        top: 8px;
+        right: 8px;
+      }
+
+      /* CONTROLES MOBILE APARECEM */
+      .mobile-player-bar {
+        display: flex;
+      }
+
+      /* SCRIPT BOX NO CELULAR */
+      .script-box {
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+      }
+      .script-header {
+        font-size: 0.75rem;
+        margin-bottom: 8px;
+      }
+      .script-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        padding-right: 4px;
+      }
+
+      /* FOOTER TRADICIONAL É SUBSTITUÍDO PELO FLOATING BAR */
+      footer {
+        display: none;
+      }
+      .mobile-floating-bar {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER COM LOGO OFICIAL BOTCONVERSA -->
+  <header>
+    <div class="brand-wrap">
+      <img src="data:image/png;base64,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" alt="BotConversa Logo" class="brand-logo-img">
+      <div class="brand-title">
+        <span>Apresentação 2026</span>
+        <span class="partner-tag">Criado por Parceiro</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="btnMobileDrawer" class="btn-drawer-toggle" title="Abrir Lista de Slides">
+        📑 <span id="mobileSlideCount">Slide 1/84</span>
+      </button>
+      <div class="badge-tiago">
+        🎙️ Voz: Tiago (BotConversa)
+      </div>
+    </div>
+  </header>
+
+  <!-- BACKDROP PARA FECHAR O MENU NO MOBILE -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+  <main>
+    <!-- LISTA LATERAL DE SLIDES (DESKTOP) / DRAWER (MOBILE) -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <span>Slides da Apresentação (84)</span>
+        <button id="btnCloseSidebar" class="sidebar-close-btn" title="Fechar menu">✕</button>
+      </div>
+      <div id="slideList" style="flex: 1; overflow-y: auto;"></div>
+      <div class="sidebar-footer">
+        Apresentação 2026 • Criado por Parceiro
+      </div>
+    </div>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="content-area">
+      <div class="visual-and-script">
+        <!-- QUADRO DO SLIDE (TRAVADO E CENTRALIZADO) -->
+        <div id="visualBox" class="visual-box">
+          <button id="btnFsToggle" class="fullscreen-btn" title="Tela Cheia (F)">
+            ⛶ Tela Cheia
+          </button>
+          <img id="slideImg" src="" alt="Slide da Apresentação" title="Clique duas vezes para Tela Cheia">
+          
+          <!-- HUD EM TELA CHEIA -->
+          <div id="fsHud" class="fs-hud">
+            <button id="btnFsPrev" title="Anterior">⏮️</button>
+            <button id="btnFsPlay" title="Reproduzir / Pausar">▶️</button>
+            <button id="btnFsNext" title="Próximo">⏭️</button>
+            <span id="fsHudTitle" class="fs-hud-title">Slide 1 / 84</span>
+            <button id="btnFsExit" title="Sair">✕ Sair</button>
+          </div>
+        </div>
+
+        <!-- CONTROLES MOBILE TOUCH (LOGO ABAIXO DO SLIDE) -->
+        <div class="mobile-player-bar">
+          <div class="mobile-controls-row">
+            <div class="mobile-btn-group">
+              <button id="btnMobPrev" class="btn-ctrl" title="Anterior">⏮️</button>
+              <button id="btnMobPlay" class="btn-ctrl primary" title="Reproduzir">▶️ Play</button>
+              <button id="btnMobNext" class="btn-ctrl" title="Próximo">⏭️</button>
+            </div>
+            <div class="mobile-btn-group">
+              <button id="btnMobSpeed" class="btn-speed" title="Velocidade da fala">1.0x</button>
+              <button id="btnMobFs" class="btn-ctrl" title="Tela Cheia">⛶</button>
+            </div>
+          </div>
+          <div class="playback-info">
+            <span id="mobTimeCurrent" class="time-display">00:00</span>
+            <div id="mobProgressContainer" class="progress-bar-container">
+              <div id="mobProgressBar" class="progress-bar"></div>
+            </div>
+            <span id="mobTimeDuration" class="time-display">00:00</span>
+          </div>
+        </div>
+
+        <!-- QUADRO DO ROTEIRO DO TIAGO (ROLAGEM INDEPENDENTE) -->
+        <div class="script-box">
+          <div class="script-header">
+            <div class="script-header-badge">
+              <span>🎙️ ROTEIRO DO TIAGO (1ª PESSOA • FALA DINÂMICA)</span>
+            </div>
+            <span id="slideIndicatorHeader" style="color: var(--text-muted); font-size: 0.78rem;">1 / 84</span>
+          </div>
+          <div id="scriptContent" class="script-text"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FLOATING CTA BAR (MOBILE) -->
+  <div class="mobile-floating-bar">
+    <a id="btnMobWhatsApp" href="https://wa.me/?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
+      <span>Responder no WhatsApp com Decisão</span>
+    </a>
+  </div>
+
+  <!-- FOOTER (DESKTOP) -->
+  <footer>
+    <div class="controls">
+      <button id="btnPrev" class="btn-ctrl">⏮️ Anterior</button>
+      <button id="btnPlay" class="btn-ctrl primary">▶️ Reproduzir Áudio</button>
+      <button id="btnNext" class="btn-ctrl">⏭️ Próximo</button>
+      <button id="btnSpeed" class="btn-speed" title="Alternar velocidade de fala">1.0x</button>
+      <button id="btnFullscreen" class="btn-ctrl" title="Expandir em Tela Cheia (F)">⛶ Tela Cheia</button>
+    </div>
+
+    <div class="playback-info">
+      <span id="timeCurrent" class="time-display">00:00</span>
+      <div id="progressContainer" class="progress-bar-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <span id="timeDuration" class="time-display">00:00</span>
+    </div>
+
+    <div class="controls" style="gap: 16px;">
+      <div class="toggle-group">
+        <label class="switch">
+          <input type="checkbox" id="autoAdvance" checked>
+          <span class="slider"></span>
+        </label>
+        <span>Auto Avanço</span>
+      </div>
+
+      <span class="desk-partner-note">Criado por Parceiro</span>
+
+      <a id="btnDeskWhatsApp" href="https://wa.me/?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
+        <span>Falar no WhatsApp</span>
+      </a>
+    </div>
+  </footer>
+
+  <audio id="audioPlayer" preload="auto"></audio>
+
+  <script>
+    const slidesData = [{"slide_number": 1, "title": "Bom, deixa eu mostrar para você a...", "slide_text": "Como Empresas Estão Revolucionando Seus WhatsApps Com Times de Assistentes de I.A. \n @thiagolopes.bc @botconversa", "script_tiago": "Bom, deixa eu mostrar para você a apresentação que a gente criou aqui dentro do BotConversa.\n\nEu tenho certeza que muita coisa vai começar a fazer sentido a partir de agora.\n\nO título dessa apresentação aqui é:\n\n“Como que donos de todos os tipos de empresas estão revolucionando seu WhatsApp com time de assistente de inteligência artificial. E como você pode replicar a mesma estratégia em minutos.”\n\nE quero começar essa apresentação com uma brincadeira que fazemos na apresentação aqui."}, {"slide_number": 2, "title": "O nosso trabalho não é fazer você...", "slide_text": "Não Use Isso Para Demitir Nenhum Funcionário… \n @thiagolopes.bc @botconversa", "script_tiago": "O nosso trabalho não é fazer você demitir nenhum funcionário.\n\nNa verdade, o que a gente quer? A gente quer dar mais ferramentas para o seu time.\n\nO seu funcionário, ele consegue te entregar X resultados, mas imagina se ele tem ali uma inteligência artificial que vai trabalhar junto com ele. Este funcionário ele vai te entregar 2, 3x ali de output de resultados. Ele vai conseguir ser muito mais produtivo.\n\nA nossa ideia não é que você substitua a sua atendente, que você substitua o seu recepcionista ou alguém do seu negócio. A gente quer dar mais ferramenta para o seu colaborador, para ele conseguir ter mais resultados e sem precisar perder tempo com tarefa manual, tarefa repetitiva.\n\nImagina você ter essa pessoa, que atende todas as mensagens do WhatsApp, apenas focando em pessoas que realmente interessadas no seu negócio, pessoas que realmente têm um problema sério que um humano precisa atender.\n\nTodas as outras pessoas fazem atendimento repetitivo sobre dúvidas simples, como: “Qual horário que abre”.\n\nA inteligência artificial está aí para tirar isso do ombro do seu time."}, {"slide_number": 3, "title": "Você Já Deve Ter Visto Por Aí…", "slide_text": "Você Já Deve Ter Visto Por Aí… \n @thiagolopes.bc @botconversa", "script_tiago": "Bom… Você já deve ter visto por aí várias notícias que a inteligência artificial vai substituir vários empregos, que vai substituir várias profissões.\n\nVocê sabe qual é a profissão que está lá no topo?\n\nÉ a profissão de secretária, é a profissão daquela pessoa que faz aquele trabalho repetitivo, principalmente o de atendimento a clientes, que uma inteligência artificial tem muito potencial de substituir essa pessoa.\n\nMas o que eu gosto de falar para várias e várias pessoas é que a inteligência artificial vai substituir quem não aprendeu utilizar a inteligência artificial.\n\nEntão, se você dá essa ferramenta para o seu time, dá essa ferramenta para o seu colaborador e ele aprende a usar ela, ele explora todo o potencial dela, é óbvio que este cara não vai ser substituído.\n\nE é isso que queremos fazer, queremos dar mais ferramenta para as pessoas do seu time."}, {"slide_number": 4, "title": "Meu objetivo aqui com esta apresentação...", "slide_text": "", "script_tiago": "Meu objetivo aqui com esta apresentação é bem simples.\n\nSe você cansou de gerenciar o WhatsApp no escuro,\n\nSe você sabe que você pode extrair mais de 20 ou 30 ou até 40% dos resultados que você tem aí no seu WhatsApp, eu quero te mostrar exatamente como você está certo na segunda afirmação e como você não precisa estar mais cansado de ficar gerenciando o WhatsApp no escuro, que é uma realidade de mais de 90% dos negócios.\n\nTenho certeza que, se você tem 10 amigos que são donos de negócio, muito possivelmente 9 deles não vão saber quanto tempo o atendente dele leva para responder; quantas mensagens ele respondeu na semana; quantos leads foram perdidos… Eles não sabem. A maioria não sabe.\n\nEntão, se você não quer ser mais essa pessoa, você está cansado de ser essa pessoa e você sabe que você pode gerar mais resultados no WhatsApp se você trabalhar da forma certa, se você trabalhar com o objetivo correto.\n\nVocê pode extrair mais 20, mais 30, mais 40%.\n\nE se você gostar dessa apresentação, eu tenho uma condição incrível que eu tenho certeza que você vai gostar.\n\nCerteza absoluta que você vai gostar dessa condição que estamos fazendo."}, {"slide_number": 5, "title": "Bom, deixa eu falar um pouquinho sobre...", "slide_text": "@thiagolopes.bc     @botconversa", "script_tiago": "Bom, deixa eu falar um pouquinho sobre o BotConversa, a nossa empresa.\n\nO BotConversa começou lá em 2018, quando eu criei uma plataforma de treinos online em que as pessoas poderiam treinar em casa com peso do corpo. Foi nesse negócio online que eu descobri esse negócio de atendimento automático.\n\nEu comecei a trabalhar com isso e a vender os serviços para os negócios da minha cidade. Eu sou de Nova Friburgo, na região Serrana do Rio de Janeiro. Comecei vendendo primeiro para uma imobiliária, depois vendi para um curso, e depois vendi para clientes fora do Brasil, Estados Unidos, Austrália; participando de grupos do Facebook.\n\nAté que...\n\nAté que eu cheguei em um momento em que pensei:\n\n“Eu preciso criar minha própria ferramenta.”\n\nE então eu fiz uma das coisas mais doidas: conheci um programador em um site de freelancer americano, fiz uma reunião com ele — que é esse cara mais alto da esquerda, o nome dele é Illya Borodin, ele é meu co-fundador e o CTO da nossa empresa — e falei pra ele:\n\n“Illya, eu tenho 35 mil reais e eu quero muito construir essa ferramenta. O que você me mostrou de solução para o WhatsApp, eu tenho certeza absoluta que vai funcionar. Se você topar, eu vou para a Bielorrússia, e a gente cria esse negócio junto.”\n\nO Illya aceitou. Eu fui para a Bielorrússia e fiquei lá 1 mês. O Illya chamou alguns amigos da faculdade dele e o nosso negócio começou em 2020. Eu fui para a Bielorrússia em 2020.\n\nNosso negócio começou a crescer absurdamente em 2020, 2021...\n\nAqui tem algumas fotos do nosso time. Essa última foto aqui embaixo foi de um encontro em que nosso time de devs — todos os nossos programadores não são do Brasil, eles são de fora do Brasil — eles fizeram um encontro em Montenegro, só desenhando novas estratégias, principalmente de inteligência artificial para a nossa ferramenta, e tem muita coisa legal vindo aí.\n\nA gente já saiu em matéria na Exame e na Pequenas Empresas & Grandes Negócios. A gente está sempre buscando entregar as melhores soluções para o pequeno e médio empresário."}, {"slide_number": 6, "title": "Bom, já falei que eu comecei a minha...", "slide_text": "Thiago Lopes (CEO) \n @thiagolopes.bc @botconversa", "script_tiago": "Bom, já falei que eu comecei a minha vida neste negócio Fitness"}, {"slide_number": 7, "title": "E foi nesse negócio fitness que eu...", "slide_text": "Geração de Leads Com Comentários \n @thiagolopes.bc @botconversa", "script_tiago": "E foi nesse negócio fitness que eu descobri como fazia a geração de leads com comentários.\n\nImagino que você deve ver isso todo dia no Instagram. Você abre no Instagram um guru que sempre está falando:\n\n“Se você quer receber isso, comente tal…”\n\nVocê já deve ter visto isso, já? Com certeza você já deve ter visto! Eu já vi várias vezes.\n\nO que eu fazia? Lá no Facebook, eu criava as postagens da minha plataforma fitness:\n\n“Você quer receber treino de glúteo, abdômen, perna? Comenta ‘Eu quero’ que te enviamos.”\n\nE eu descobri que esse formato para gerar lead era incrível. Comecei a usar isso demais."}, {"slide_number": 8, "title": "Depois eu aprimorei isso, comecei a...", "slide_text": "Fluxos De Vendas Automático", "script_tiago": "Depois eu aprimorei isso, comecei a utilizar para fluxos de vendas.\n\nE este fluxo aqui, por exemplo, onde você consegue criar um anúncio, traz a pessoa de um anúncio para o seu WhatsApp. No seu WhatsApp, você segue um script de vendas que começa, basicamente, fazendo uma saudação com essa pessoa que entrou no WhatsApp.\n\nPor exemplo, vamos supor que você é dono de uma clínica de estética. A pessoa acabou de chegar no seu WhatsApp, você vai falar:\n\n“Olá, tudo bem? Seja muito bem-vindo à nossa clínica. Se você chegou aqui, tenho certeza que você quer resolver algum desses problemas.”\n\nImagina que a campanha do anúncio foi sobre botóx.\n\nAssim que o cliente clicar no anúncio e chegar no WhatsApp, ele recebe a mensagem:\n\n“Olá, tudo bem? Seja muito bem-vindo ao WhatsApp da clínica. Eu quero te mostrar nesta conversa exatamente como você pode remover todas essas rugas, qualquer ruga que te incomoda hoje no rosto. Eu sei que, às vezes, a gente olha no espelho….”\n\nAgora eu começo a agitar o problema. Por exemplo, a partir do problema:\n\n“Você tem problemas com rugas?”\n\nAgora eu agito o problema:\n\n“A gente sabe, pois atendemos centenas de mulheres aqui, e a gente sabe que, sempre que olhar no espelho, vai ter uma marca, uma ruga, enfim, alguma coisa que não nos agrada. E a gente quer mudar isso, mas não sabe, às vezes, como. Só que hoje…”\n\nA solução:\n\n“Existe uma forma muito simples de você conseguir fazer isso. Você pode fazer isso de várias formas, mas a forma mais simples e mais utilizada no mercado é utilizando a toxina botulínica. O botóx. Você já ouviu falar sobre isso?”\n\nCliente: “Já.”\n\nVendedor: “Você já fez esse procedimento?”\n\nCliente: “Não.”\n\nVendedor: “Bom, temos uma solução dentro da nossa clínica em que criamos um novo método de botóx em que você praticamente não precisa fazer retoque.”\n\nAssim você faz a oferta.\n\nEntão, a pessoa vem do anúncio pro WhatsApp, você conta toda essa história, você converte uma pessoa desconhecida para uma pessoa que pensará:\n\n“Ele entende meu problema, ele apresentou uma solução e aqui está um produto que entrega essa solução e me fez uma oferta.”\n\nNão tem como não funcionar. Eu comecei a utilizar este funil. Este funil foi responsável pelo resultado e crescimento do nosso negócio."}, {"slide_number": 9, "title": "Até que a gente começou a ficar...", "slide_text": "Ficamos \n Obcecados \n @thiagolopes.bc @botconversa @blinkchat.oficial", "script_tiago": "Até que a gente começou a ficar obcecado com isso. A gente começou a buscar mais e mais formas de como que a gente conseguiria ajudar ainda mais os negócios."}, {"slide_number": 10, "title": "A gente foi o primeiro negócio, a...", "slide_text": "Lançamos A Primeira Formação de Marketing de Conversa do Brasil \n @thiagolopes.bc @botconversa @blinkchat.oficial", "script_tiago": "A gente foi o primeiro negócio, a primeira empresa a lançar a primeira formação de marketing do Brasil.\n\nA gente criou uma formação em que a gente treinava pessoas que queriam trabalhar nessa área para prestar serviço para donos de negócio. Isso deu tão certo que a gente abriu ainda mais o programa agora e estamos lançando agora um programa ainda mais estruturado.\n\nPois, na verdade, não conseguimos dar conta de tantos negócios querendo implementar inteligência artificial, e ele precisa de uma pessoa para fazer isso.\n\nMas nem sempre tudo foi fácil aqui no BotConversa."}, {"slide_number": 11, "title": "Às vezes as coisas eram fáceis.", "slide_text": "@thiagolopes.bc     @botconversa   @blinkchat.oficial", "script_tiago": "Às vezes as coisas eram fáceis.\n\nMas elas eram muito difíceis, principalmente se você tá começando, se você quer resolver seu problema no WhatsApp ou se você quer colocar uma inteligência artificial no seu WhatsApp."}, {"slide_number": 12, "title": "NÃO Faça Isso…", "slide_text": "NÃO Faça Isso… \n Atender Apenas Pelo WhatsApp Web \n Tempo De Resposta Alto \n Atendimento 100% Manual \n Atendimento 100% Chatbot \n Vários Números de WhatsApp \n @thiagolopes.bc @botconversa", "script_tiago": "Tem coisas que você NÃO deve fazer, por exemplo:\n\nVocê não deve atender apenas pelo WhatsApp Web. Isso limita demais a capacidade de você ter resultados hoje no WhatsApp.\n\nVocê não deve ter um tempo de resposta alto. Se você demora muito para responder seus clientes, é óbvio que eles vão para outro negócio que responde mais rápido.\n\nPor exemplo: o cliente procurou seu negócio no Google. Assim que ele clicar no seu link e enviar mensagem, se você demorou 30 minutos para responder e o cliente quer muito resolver o problema, você não acha que ele vai clicar em outros links do Google e mandar mensagem para todos os outros negócios?\n\nQuem responder ele da forma que ele gostaria, fizer ele entender, ouvir o que ele precisa ouvir… ele vai fechar! É óbvio!\n\nSe você faz seu atendimento 100% manual, você deixa 100% dos atendimentos com as recepcionistas atenderem. Primeiro que você não venderá 24 horas. Segundo que, quando ela estiver comendo ou atendendo no balcão, você vai deixar o cliente esperando.\n\nFazer um atendimento hoje 100% por chatbot… Você sabe o que é um chatbot? Aquelas automações: “Clique no botão, digite 1, 2 e 3.” Isso funcionou muito bem, só que hoje não é a melhor solução, ainda mais porque a gente tem a inteligência artificial para colocar no WhatsApp.\n\nE você ter vários números de WhatsApp diferente. Se você tem vários números de WhatsApp diferente, você apenas está fazendo uma confusão na cabeça do seu cliente."}, {"slide_number": 13, "title": "O que você vai aprender Você Vai Entender Como Assistentes de I.A. Podem Transformar Seu WhatsApp Para Sempre ⚡ JÁ NOS PRÓXIMOS MINUTOS", "slide_text": "O que você vai aprender \n Você Vai Entender Como Assistentes de I.A. Podem Transformar Seu WhatsApp Para Sempre \n ⚡ JÁ NOS PRÓXIMOS MINUTOS \n @thiagolopes.bc @botconversa", "script_tiago": "Nessa apresentação aqui, você vai entender como que assistentes de inteligência artificial podem transformar o seu WhatsApp para sempre.\n\nAgora, já nos próximos minutos…"}, {"slide_number": 14, "title": "Depois de +8 anos, Descobrimos O Jeito DIFÍCIL... (Você Hoje Tem Um Atalho E Verá O Jeito Fácil...)", "slide_text": "Depois de +8 anos, Descobrimos \n O Jeito DIFÍCIL... \n (Você Hoje Tem Um Atalho E Verá O Jeito Fácil...) \n @thiagolopes.bc @botconversa @blinkchat.oficial", "script_tiago": "Depois de mais de 8 anos de experiência…\n\nA gente descobriu o jeito difícil de você atender no WhatsApp, de você ter resultado no WhatsApp.\n\nMas só que hoje, nesta apresentação aqui, você vai ter um atalho e você vai ver o jeito fácil."}, {"slide_number": 15, "title": "Os 3 Segredos ...", "slide_text": "Os 3 Segredos ... \n @thiagolopes.bc @botconversa", "script_tiago": "Essa apresentação aqui, ela é dividida em três segredos.\n\nO primeiro segredo: eu vou te falar porque que você tá perdendo pelo menos 33 dias úteis no ano por você não ter um assistente de inteligência artificial.\n\nO segundo segredo: vou te falar porque um time de assistente de inteligência artificial pode atender como se fosse você, mesmo que você não seja técnico.\n\nE o terceiro segredo: eu vou te falar as três estratégias mais fáceis para ver o ponteiro das vendas andar em menos de 7 dias.\n\nEu prometo que eu vou ser bem objetivo aqui."}, {"slide_number": 16, "title": "Vou começar com o primeiro segredo.", "slide_text": "@thiagolopes.bc @botconversa @blinkchat.oficial", "script_tiago": "Vou começar com o primeiro segredo. Por que você está perdendo 33 dias úteis no ano por você não ter assistentes de inteligência artificial.\n\nVocê já parou para pensar em alguma coisa sobre isso? Você já parou para pensar que você tá perdendo 10, 15, 20 dias no ano apenas porque você está atendendo no WhatsApp?\n\nBom, eu vou te mostrar a matemática. Eu tenho certeza que ela vai fazer sentido para você.\n\nE a gente gosta de começar esse segredo aqui falando uma frase muito famosa."}, {"slide_number": 17, "title": "É o nosso lema aqui dentro do nosso...", "slide_text": "\"Você Pode Ter Tudo O Que Quiser Na Vida Se Ajudar Outras Pessoas A Conseguirem O Que Elas Querem.\" \n ZIG ZIGLAR \n @thiagolopes.bc @botconversa @blinkchat.oficial", "script_tiago": "É o nosso lema aqui dentro do nosso negócio, que é de um cara chamado Zig Zigler.\n\nEle foi considerado o vendedor dos vendedores na sua época de porta em porta nos Estados Unidos, e ele fala o seguinte:\n\n“Você pode ter tudo o que quiser na vida se ajudar outras pessoas a conseguirem o que elas querem.”"}, {"slide_number": 18, "title": "E aí eu te pergunto: os seus clientes...", "slide_text": "Seus Clientes Querem Isso? \n ✓ Resposta Rápida? \n ✓ Informação Clara? \n ✓ Opções? \n ✓ Confirmação? \n ✓ Agendamento Ou Compra Imediata? \n ✓ Tirar Dúvidas Específicas? \n ✓ Atendimento Fora Do Horário Comercial? \n ✓ Sentir-Se Atendidos? \n ✓ Orientação Do Próximo Passo? \n @thiagolopes.bc @botconversa @blinkchat.oficial", "script_tiago": "E aí eu te pergunto: os seus clientes aí no seu negócio\n\nEles querem:\n\nResposta rápida\n\nInformação clara\n\nOpções\n\nEle quer ter uma confirmação ali no WhatsApp de um agendamento\n\nEle quer conseguir agendar ou comprar imediatamente\n\nEle quer tirar dúvidas específicas\n\nEle quer atendimento fora do horário comercial?\n\nEle quer sentir-se atendido?\n\nEle quer orientação do próximo passo?"}, {"slide_number": 19, "title": "Bom, e a sua secretária, ou vendedor...", "slide_text": "", "script_tiago": "Bom, e a sua secretária, ou vendedor, ou recepcionista…\n\nEla quer parar de repetir as mesmas respostas.\n\nOu ele quer filtrar curioso de cliente sério?\n\nQuer receber leads já qualificados, ou seja, ele não tem que fazer todo o processo de qualificação.\n\nEle quer responder rápido sem precisar estar grudado no celular?\n\nEle quer focar apenas nos clientes que têm chance de fechar.\n\nEle quer diminuir o estresse no horário de pico.\n\nEle quer ver o esforço dele virar vendas."}, {"slide_number": 20, "title": "E você?", "slide_text": "", "script_tiago": "E você?\n\nVocê quer mais vendas sem mais trabalhos?\n\nVocê quer clientes satisfeitos e fiéis aí no seu negócio.\n\nVocê quer atendimento rápido e constante.\n\nVocê quer reduzir custos de mão de obra?\n\nVocê quer pessoas comentando aí sobre o seu atendimento? Talvez um amigo, um conhecido ou até um concorrente falando:\n\n“Você não sabe o que o você fez no WhatsApp da empresa, tá atendendo todo mundo que manda mensagem no negócio.”\n\nVocê quer ter mais tempo livre para pensar no seu negócio?\n\nE o melhor, você quer ver o faturamento crescer?\n\nEu tenho certeza que você quer!"}, {"slide_number": 21, "title": "Se A Resposta For Sim… A Primeira Coisa A Resolver É O “Buraco Negro” Do WhatsApp", "slide_text": "Se A Resposta For Sim… \n A Primeira Coisa A Resolver É \n O “Buraco Negro” Do WhatsApp \n @thiagolopes.bc @botconversa", "script_tiago": "Bom, se a resposta for sim, e eu sei que ela é, a primeira coisa que você tem que resolver é o buraco negro do WhatsApp."}, {"slide_number": 22, "title": "O “Buraco Negro” Do WhatsApp", "slide_text": "O “Buraco Negro” Do WhatsApp \n @thiagolopes.bc @botconversa", "script_tiago": "O que é o buraco negro do WhatsApp?\n\nImagina um negócio médio, um negócio pequeno e médio, que recebe em média de 30 a 60 atendimentos por dia.\n\nOlha, aqui ó: 30 a 60 atendimentos por dia.\n\nSe esse negócio demora, em média, 2 minutos para fazer um atendimento — por exemplo, a pessoa me mandou mensagem e aí eu comecei a responder essa pessoa — é um troca e vai de mensagem, que até acabar o atendimento demorou 2 minutos.\n\nSe você demora 2 minutos em média, e dessas 30 a 60 pessoas que te mandam mensagem no dia, vamos supor que tenha 50 pessoas que te mandam mensagem no dia e você demora, em média, 2 minutos em cada atendimento…\n\nVocê vende para todo mundo que te manda mensagem?\n\nExemplo: amanhã, se 50 pessoas te mandarem mensagem, você vai vender para 50 pessoas? Possivelmente não. Muito possivelmente vai ter muito curioso, vai ter gente que não vai fechar nada, vai ter gente que vai falar que vai fechar depois, vai ter gente que vai dar vários motivos.\n\nVamos considerar que você fecha 50% das pessoas que te mandam mensagem. Todo mundo que manda mensagem, 50% vira negócio. Significa que os outros 50% é tempo perdido.\n\nÉ tempo que o seu atendente poderia estar fazendo qualquer outra coisa, porque aquele atendimento poderia ter sido resolvido com uma inteligência artificial.\n\nE aí, quando você coloca na ponta do lápis, a conta fica absurda.\n\nPorque, se você faz de 30 a 60 atendimentos por dia e esse atendimento leva 2 minutos, significa que, se você não converter 100%, se você só converte 50%, você tá perdendo de 30 a 60 minutos por dia. Isso dá de 17 a 33 dias úteis no ano.\n\nE o negócio fica muito pior se seu atendimento é mais demorado.\n\nSe seu atendimento demora 5 minutos e você faz de 30 a 60 atendimentos por dia, significa que você está perdendo de 31 a 62 dias úteis no ano.\n\nE, se seu atendimento demora 10 minutos em média, são de 62 a 124 dias úteis no ano.\n\nVocê já parou para fazer essa conta?\n\nQuando eu mostrei essa conta no palco do Adaptar Summit, o maior evento de inteligência artificial, você provavelmente deve ter visto vários anúncios deste evento.\n\nO BotConversa foi o patrocinador master do evento, e eu palestrei nesse evento.\n\nQuando ele mostrou isso aqui, depois da palestra, a quantidade de pessoas e empresários que falaram:\n\n“Eu nunca parei para olhar isso por essa ótica. Nunca parei para perceber o quanto de tempo que o meu time está perdendo porque está travado ali no trabalho manual.”\n\nQuanto tempo poderia ter sido investido em outras coisas. Dá para fazer milhares de outras coisas, mas foi perdido ali.\n\nEntão, as pessoas às vezes não param para ver isso.\n\nPor que não param? Porque até dois anos atrás esse era o único jeito. Não dava para você atender no seu WhatsApp com alguma inteligência artificial, porque não existia.\n\nSó que agora existe. Não faz mais sentido você perder esse tempo, seu time perder esse tempo com algo que uma inteligência artificial consegue resolver."}, {"slide_number": 23, "title": "Seu Negócio Pode Se Dar Ao Luxo De Perder 1 a 3 Meses De Trabalho Todos Os Anos?", "slide_text": "Seu Negócio Pode Se Dar Ao Luxo De Perder \n 1 a 3 Meses \n De Trabalho Todos Os Anos? \n @thiagolopes.bc @botconversa", "script_tiago": "Bom, o seu negócio pode dar o luxo de perder um a três meses de trabalho? Com certeza não."}, {"slide_number": 24, "title": "Chatbots Resolveram Muitos Desses Problemas", "slide_text": "Chatbots Resolveram Muitos Desses Problemas \n @thiagolopes.bc @botconversa", "script_tiago": "O chatbot, ele resolveu muitos desses problemas.\n\nEle resolveu o problema de tempo de resposta alto. Quando a pessoa mandava mensagem, um chatbot já respondia na hora, falava:\n\n“Olá, tudo bem? Seja bem-vindo aqui ao nosso negócio. Qual é o seu nome?”\n\nA pessoa digita o nome, depois o chatbot pode mostrar ali um menu numérico: digita 1, 2, 3 ou 4, ou até um botão para a pessoa clicar nesse botão e aparecer uma lista de opções.\n\nProvavelmente você já deve ter visto isso aí, entrando em contato com o banco, companhia aérea, enfim. Você já deve ter visto algum menu desse.\n\nEsse menu é muito legal, porém ele dá muito problema."}, {"slide_number": 25, "title": "Mas Eles Criaram Problemas…", "slide_text": "Mas Eles Criaram Problemas… \n @thiagolopes.bc @botconversa", "script_tiago": "E o chatbot criou muito problema.\n\nO dono de negócio, ele tinha que colocar na balança:\n\neu quero focar em velocidade — pessoa mandou mensagem, bum, eu respondo e faço tudo automático e acabou —\n\nou ele quer focar em experiência.\n\nNão querendo focar em quando a pessoa enviar mensagem ele enviar uma resposta, um menu… não tem uma opção que quer ali no menu, o cliente manda uma mensagem e o menu trava.\n\nEu tenho certeza absoluta que, se você entra em contato com banco, companhia de telefone, companhia aérea, você entra nesses atendimentos, você deve ficar estressado porque tem muito chatbot burro.\n\nE essa é a verdade."}, {"slide_number": 26, "title": "Exemplos…", "slide_text": "Exemplos… \n @thiagolopes.bc @botconversa", "script_tiago": "Bom, aqui tem um exemplo.\n\nOlha aqui: eu mandei um “olá” e recebi uma mensagem dizendo:\n\n“Olá, seja muito bem-vindo. Qual seu nome?”\n\nEu digitei “É Thiago”.\n\nE o chatbot falou:\n\n“Prazer, é Thiago.”\n\nO meu nome não é “É Thiago”. Eu digitei “É Thiago”, mas o meu nome é só Thiago. Só que o chatbot não tem a inteligência de conseguir entender: ah, o primeiro nome é Thiago.\n\nE aí já causa uma primeira péssima impressão.\n\nImagina que o cara digitou “Meu nome é Thiago”. Ele vai responder: “Prazer, meu nome é Thiago”. Não dá.\n\nE aqui no segundo exemplo, eu digitei “É Thiago”, mostrou ali as opções para clicar em um botão e aparecer um menu. O cliente vai e manda um áudio falando qualquer coisa ou a dúvida dele.\n\nAí o chatbot fala:\n\n“Infelizmente eu não consigo compreender o que você enviou. Para facilitar, vou te enviar o nosso menu. Como posso ajudar?”\n\nVocê acha que esse cliente vai continuar a conversa? Sério…\n\nVocê acha que o cliente, primeiro deu o nome dele, você chamou ele de “É Thiago” ou chamou ele de “meu nome é Thiago”. Depois você mandou para ele um menu, ele te mandou um áudio falando:\n\n“Olha, eu tô com uma correria aqui, estou com uma urgência, eu preciso fazer alguma coisa….”\n\nE o chatbot fala:\n\n“Olha, infelizmente eu não consigo compreender o que você enviou. Para facilitar, vou te enviar o nosso menu.”\n\nÉ óbvio que acabou a experiência. Se esse cara é um lead novo, ele não vai nem continuar a conversa com você.\n\nEntão, o chatbot foi muito bom porque ele resolveu muitos problemas, mas também teve o efeito colateral de gerar experiências ruins."}, {"slide_number": 27, "title": "Para Solucionar Cada Um Dos Problemas Era Necessário Criar Uma Nova Lógica", "slide_text": "Para Solucionar Cada Um Dos Problemas Era Necessário Criar \n Uma Nova Lógica \n @thiagolopes.bc @botconversa", "script_tiago": "E para solucionar cada um desses novos problemas, você precisava criar uma nova lógica."}, {"slide_number": 28, "title": "E Isso Adicionava Novas Camadas de Complexidade", "slide_text": "E Isso Adicionava Novas \n Camadas de Complexidade \n @thiagolopes.bc @botconversa", "script_tiago": "E isso adicionava novas camadas de complexidade."}, {"slide_number": 29, "title": "Até Que Surgiu o ChatGPT", "slide_text": "Até Que Surgiu o \n ChatGPT \n @thiagolopes.bc @botconversa", "script_tiago": "Até que surgiu o ChatGPT"}, {"slide_number": 30, "title": "E Fizemos O Que Todo Startup Inovadora Faz…", "slide_text": "E Fizemos O Que Todo \n Startup Inovadora Faz… \n @thiagolopes.bc @botconversa", "script_tiago": "E a gente fez o que toda startup inovadora faz. A gente abriu a nossa carteira."}, {"slide_number": 31, "title": "No Início Parecia Brincadeira", "slide_text": "No Início Parecia Brincadeira \n @thiagolopes.bc @botconversa", "script_tiago": "A gente foi lá e investiu no Chat GPT e começamos a testar o Chat GPT.\n\nNo início, ele parecia uma brincadeira. Você conseguia pedir para, por exemplo — aqui na imagem — “Canta um rap sobre meu gato”, “Faça um poema sobre pizza”.\n\nEle não era um modelo de inteligência artificial capaz de resolver problemas reais do dia a dia de um negócio.\n\nParecia brincadeira…"}, {"slide_number": 32, "title": "Primeiro Uso No WhatsApp", "slide_text": "Primeiro Uso No WhatsApp \n @thiagolopes.bc @botconversa", "script_tiago": "Só que o negócio começou a evoluir.\n\nE o primeiro uso dessa inteligência artificial no WhatsApp foi o seguinte:\n\nVocê conseguia ali utilizar a inteligência artificial, falar:\n\n“Olha, inteligência artificial, essas aqui são as informações do meu negócio.”\n\nE aí você colocava isso na inteligência artificial. A pessoa entrava em contato, você mostrava para ela algumas opções.\n\nPor exemplo, neste caso:\n\n“Olá, como posso ajudar?”\n\nAí o cliente manda:\n\n“Quais serviços vocês oferecem?”\n\nA inteligência artificial responde:\n\n“Temos vários serviços, temos esse, esse e esse.”\n\nAí o cliente manda:\n\n“E eles têm valores muito diferentes?”\n\nE aí a inteligência artificial respondia:\n\n“Desculpa, você pode especificar sobre o que você tá falando?”\n\nE o principal problema disso aqui era a falta de contexto. A inteligência artificial só conseguia responder uma coisa por vez e não tinha memória do que aconteceu antes.\n\nEntão, imagina você conversar com uma pessoa no WhatsApp e a pessoa falar:\n\n“Oi, tudo bem? Qual hambúrguer você tem aí? Qual a promoção que você tem aí hoje?”\n\nBum, você fala a promoção que você tem hoje.\n\nAí o cliente fala:\n\n“Ah, eu vou querer o número dois.”\n\nE aí você responde:\n\n“Qual que é o número dois? Desculpa, estou sem memória.”\n\nÉ óbvio que vai ficar ruim. Não vai funcionar."}, {"slide_number": 33, "title": "Brincadeira Ficou Mais Séria", "slide_text": "Brincadeira Ficou Mais Séria \n @thiagolopes.bc @botconversa", "script_tiago": "Mas depois melhorou.\n\nDepois, a brincadeira ficou mais séria, pois agora a inteligência artificial tinha memória.\n\nEntão, o mesmo cenário aqui, por exemplo:\n\n“Ah, a gente tem vários serviços disponíveis, opção 1, 2 e 3.”\n\nAí o cliente manda:\n\n“E eles têm valores muito diferentes?”\n\nA inteligência artificial consegue continuar a conversa:\n\n“É, eles têm os valores diferentes. Qual chamou mais a sua atenção?”\n\nA partir desse momento, a gente criou uma nova janela de oportunidades para negócios conseguirem ser mais eficientes utilizando uma nova tecnologia."}, {"slide_number": 34, "title": "Vou falar aqui algumas coisas que antes...", "slide_text": "Coisas Que Antes Eram \n E HOJE SÃO \n @thiagolopes.bc @botconversa", "script_tiago": "Vou falar aqui algumas coisas que antes eram impossíveis com um chatbot e hoje são possíveis com inteligência artificial."}, {"slide_number": 35, "title": "Entende TUDO Que o Cliente Digita", "slide_text": "Entende TUDO Que o Cliente Digita \n @thiagolopes.bc @botconversa", "script_tiago": "Primeiro, a inteligência artificial entende tudo que o cliente digita.\n\nEntão, se ele digitar apenas uma mensagem, a inteligência artificial vai entender.\n\nSe você tem um cliente que manda separadamente “Oi, tudo bem, pode me ajudar com isso?”, a inteligência artificial vai compreender.\n\nSe o cliente manda texto, texto, áudio, ela vai agrupar todas as mensagens."}, {"slide_number": 36, "title": "Entende Áudios", "slide_text": "Entende Áudios \n @thiagolopes.bc @botconversa", "script_tiago": "Ela vai entender. A inteligência artificial também compreende áudio, como mencionei anteriormente.\n\nEntão, se o cliente mandar áudio, ela consegue entender exatamente o que seu cliente enviou e responder seu cliente."}, {"slide_number": 37, "title": "Compreende Imagens", "slide_text": "Compreende Imagens \n @thiagolopes.bc     @botconversa", "script_tiago": "Ela compreende imagem. Seu cliente precisa te enviar alguma imagem, comprovante de pagamento.\n\nA inteligência artificial consegue identificar a imagem, como se fosse ler a imagem e traduzir essas informações para o que você precisar."}, {"slide_number": 38, "title": "Salva Informações Personalizadas", "slide_text": "Salva Informações Personalizadas \n @thiagolopes.bc     @botconversa", "script_tiago": "Ela também consegue salvar informações personalizadas.\n\nEntão, por exemplo, ela começou o atendimento, o cara começou a falar do seu negócio, que ele precisa desse procedimento, daquele procedimento, ele tem esse objetivo…\n\nTodos esses itens que vão acontecer na conversa, você pode falar para a inteligência artificial salvar essas informações de forma separada.\n\nSe você, por exemplo, quer salvar qual é o procedimento que o cliente tem interesse, você cria ali um campo “Procedimento”. Quando, na conversa, a inteligência artificial entender qual é o procedimento que o cliente quer, ele já salva no campo e você já tem essa informação.\n\nEntão, a inteligência artificial resolve muito problema."}, {"slide_number": 39, "title": "Entende a Intenção da Conversa", "slide_text": "Entende a Intenção da Conversa \n @thiagolopes.bc     @botconversa", "script_tiago": "Ela também consegue entender a intenção da conversa.\n\nEntão, por exemplo, iniciou aqui a conversa:\n\n“Olá, seja muito bem-vindo na estética, é um prazer ter você aqui, Beatriz, como posso ajudar hoje?”\n\nAí a Beatriz vai lá e fala:\n\n“Oi, posso falar direto com a Cíntia? Foi ela que me atendeu da última vez.”\n\nA inteligência artificial consegue entender o que a pessoa quer e direcionar essa pessoa para o lugar certo.\n\nEntão, você pode já, na inteligência artificial, falar para ela:\n\n“Olha, se acontecer isso aqui, vai para cá; se acontecer isso aqui, vai para lá….”\n\nE você pode até combinar diferentes assistentes. Um assistente faz uma coisa, o outro assistente faz outra coisa.\n\nE eu já vou entrar nesse assunto."}, {"slide_number": 40, "title": "Faz Agendamentos", "slide_text": "Faz Agendamentos \n @thiagolopes.bc     @botconversa", "script_tiago": "A inteligência artificial também consegue fazer agendamento.\n\nQual é o sistema de agendamento que você utiliza aí? Você sabe se ele tem API aberta?\n\nBom, não tem problema, podemos pesquisar aqui.\n\nSe ele tem API aberta, você consegue integrar isso dentro do seu WhatsApp, conectar os dois sistemas e o cliente fazer o agendamento dentro do seu WhatsApp."}, {"slide_number": 41, "title": "Depoimento Claudio (Adapta)", "slide_text": "Depoimento Claudio (Adapta) \n @thiagolopes.bc     @botconversa", "script_tiago": "Eu tenho um depoimento aqui de um cliente nosso, o Cláudio da Adapta, que comprova exatamente o poder dessa transformação no WhatsApp."}, {"slide_number": 42, "title": "Metáfora Visual", "slide_text": "Metáfora Visual \n @thiagolopes.bc     @botconversa \n Um restaurante bem organizado:", "script_tiago": "A gente tem uma metáfora aqui que a gente gosta de falar: um restaurante bem organizado tem o garçom que qualifica o cliente, tem o cozinheiro que resolve o pedido, tem o caixa que fecha o pagamento e tem o gerente que resolve problema.\n\nAgora, você imagina fazer tudo isso uma pessoa só… não dá.\n\nÉ a mesma coisa que você tentar colocar um assistente de inteligência artificial para fazer tudo. Não vai funcionar."}, {"slide_number": 43, "title": "Os 4 Tipos de Assistentes", "slide_text": "Os 4 Tipos de Assistentes \n @thiagolopes.bc     @botconversa \n Qualificador \n Primeiro ponto de contato. Descobre a intenção do lead. \n Resolutivo \n Responde dúvidas e entrega orientação. \n Transacional \n Executa cobranças e fecha pagamentos. \n Especialista \n Atendimento focado e aprofundado.", "script_tiago": "É por isso que a gente gosta de falar para qualquer negócio que você só precisa de 4 tipos de assistentes.\n\nEsses quatro tipos de assistentes conseguem resolver mais de 90 dos seus atendimentos.\n\nEu vou passar por cada um desses assistentes aqui."}, {"slide_number": 44, "title": "Assistente Qualificador", "slide_text": "Assistente Qualificador \n @thiagolopes.bc     @botconversa", "script_tiago": "O primeiro deles é o assistente qualificador.\n\nQual é a função do assistente qualificador?\n\nEle é o primeiro ponto de contato com o cliente que te manda mensagem no WhatsApp.\n\nPensa em um condomínio, por exemplo. Imagina que, quando você chega em um condomínio, qual é a primeira coisa que o porteiro te pergunta?\n\n“Qual é o seu nome? Está indo para onde?”\n\nO objetivo desse assistente é entender exatamente quem é essa pessoa, qual é a intenção dela, o que ela deseja, o que ela precisa e, aí sim, direcionar ela para o lugar certo.\n\nE aí, ele envia a pessoa para o lugar certo.\n\nQuando você usa esse assistente? Quando você precisa descobrir o que a pessoa quer, antes de você oferecer.\n\nEntão, aqui a gente tem, ó, um exemplo de pergunta que um assistente qualificador vai fazer:\n\n“Olá, tudo bem? Como é que eu posso te ajudar hoje?”\n\nA pessoa vai começar a falar no WhatsApp, ele vai entender e vai direcionar a pessoa para o lugar certo."}, {"slide_number": 45, "title": "Assistente Resolutivo", "slide_text": "Assistente Resolutivo \n @thiagolopes.bc     @botconversa", "script_tiago": "A gente também tem o tipo de assistente chamado assistente resolutivo.\n\nEsse assistente, basicamente, funciona como um assistente que tem a base de conhecimento do seu negócio.\n\nEntão, sabe todas as perguntas repetitivas que você recebe aí no seu [NICHO DO CLIENTE] — [Dê exemplos de perguntas que julgue como básicas para o nicho do cliente].\n\nTudo isso que você recebe todo dia.\n\nVocê pode ter um assistente resolutivo que vai responder todas as dúvidas repetitivas e comuns que todos os seus clientes enviam."}, {"slide_number": 46, "title": "Assistente Transacional", "slide_text": "Assistente Transacional \n @thiagolopes.bc     @botconversa", "script_tiago": "Depois, a gente tem o assistente transacional.\n\nEsse tipo de assistente é um tipo de assistente que você cria para fazer agendamento, para focar em fazer uma venda, enviar um link de venda, enviar uma chave Pix para a pessoa fazer um Pix.\n\nO objetivo dele é trazer a pessoa de interessada para uma pessoa que quer fazer a compra. Ela quer comprar alguma coisa sua."}, {"slide_number": 47, "title": "Assistente Especialista", "slide_text": "Assistente Especialista \n @thiagolopes.bc     @botconversa", "script_tiago": "E por fim, a gente tem o assistente especialista.\n\nEle resolve situações específicas, críticas, delicadas.\n\nPor exemplo, eu não sei se você trabalha com boleto no seu negócio, mas se você tem que recuperar boleto vencido ou você quer reengajar um cliente sumido, um lead sumido…\n\nImagina: a pessoa fez um serviço no seu seu nicho há 6 meses atrás. O que você pode fazer?\n\nCriar um assistente, dar para ele um comando, uma instrução, e aí ele vai saber exatamente o que ele pode fazer, como ele vai iniciar a conversa e qual é o objetivo dele."}, {"slide_number": 48, "title": "Time de Assistentes", "slide_text": "Time de Assistentes \n @thiagolopes.bc @botconversa", "script_tiago": "Basicamente, esses assistentes combinados funcionam assim:\n\nA pessoa te manda uma mensagem no WhatsApp.\n\nO qualificador vai entender o que ela precisa.\n\nVai direcionar a pessoa para o assistente correto.\n\nE esses assistentes podem consultar uma base de conhecimento, podem conversar com seu CRM.\n\nO resolutivo também pode atribuir essa conversa para um humano.\n\nO transacional pode atualizar seu CRM, o transacional pode mandar a pessoa falar com um atendente humano, ele pode focar em uma venda ou também pode fazer uma integração, acionando outras ferramentas dentro do seu negócio.\n\nE o especialista é a mesma coisa: CRM, atribuir para algum humano, focar em fazer vendas, recuperar venda, boleto e fazer integração."}, {"slide_number": 49, "title": "Pra Quem Isso Funciona:", "slide_text": "Pra Quem Isso Funciona: \n ✓ Advocacia \n ✓ Alimentação e Bebidas \n ✓ Arte e Entretenimento \n ✓ Automotivo \n ✓ Beleza e Moda \n ✓ Educação e Treinamento \n ✓ Esportes e Lazer \n ✓ E-commerce \n ✓ Imobiliário \n ✓ ONGs e Organizações Sociais \n ✓ Saúde Animal \n ✓ Saúde e Bem-Estar \n ✓ Serviços Domésticos \n ✓ Órgãos Públicos \n ✓ Serviços Profissionais \n ✓ Tecnologia e Inovação \n ✓ Turismo e Hospitalidade \n ✓ Varejo e Comércio Eletrônico…", "script_tiago": "Pra quem que isso funciona?\n\nPara qualquer negócio que atende pelo WhatsApp.\n\nSe atende pelo WhatsApp, ele pode utilizar esses 4 tipos de assistentes, e eu tenho certeza absoluta que 90% do atendimento deles vão passar por uma inteligência artificial e vão ser resolvidos quase por completo."}, {"slide_number": 50, "title": "Vamos começar o segredo número 2, que é...", "slide_text": "Como Treinar Um Time De Assistentes De I.A. \n Para Atender Como Se Fosse Você \n (Mesmo Que Você Não Seja Técnico) \n @thiagolopes.bc • @botconversa • @blinkchat.oficial", "script_tiago": "Vamos começar o segredo número 2, que é bem rápido.\n\nComo você pode treinar um time de assistentes de inteligência artificial para atender como se fosse você, mesmo que você não seja uma pessoa técnica.\n\nEu imagino que você não é um programador, por exemplo. Você não precisa ser um programador, você apenas precisa entender como que você treina esses assistentes."}, {"slide_number": 51, "title": "Bom, antigamente, o que você precisava...", "slide_text": "O Que Era Preciso Fazer… \n ✕ Programadores \n ✕ Agências \n ✕ N8N, Make, Zapier, etc. \n ✕ Ferramentas Brasileiras Caras \n ✕ Ferramentas Gringas Em Dólar \n @thiagolopes.bc • @botconversa", "script_tiago": "Bom, antigamente, o que você precisava fazer para automatizar seu WhatsApp:\n\nVocê precisava contratar um time de programadores.\n\nContratar uma agência super cara.\n\nOu utilizar algumas ferramentas de integração chamadas n8n, Make, Zapier… não sei se você conhece alguma dessas ferramentas.\n\nOu você precisava contratar ferramentas brasileiras caras.\n\nOu contratar ferramentas gringas em dólar, que era o que eu fazia lá em 2018.\n\nSó que isso não é legal, isso não é a melhor coisa que existe hoje para você fazer."}, {"slide_number": 52, "title": "O NOVO jeito…", "slide_text": "O NOVO jeito…", "script_tiago": "Existe um novo jeito de você conseguir fazer isso"}, {"slide_number": 53, "title": "E ele se chama BotConversa IA.", "slide_text": "", "script_tiago": "E ele se chama BotConversa IA.\n\nA gente criou uma solução de inteligência artificial que deixa isso extremamente fácil: você trazer essas ideias para a realidade com um assistente de inteligência artificial."}, {"slide_number": 54, "title": "Veja Como É Simples Criar Um Assistente de I.A.", "slide_text": "Veja Como É Simples Criar Um Assistente de I.A. \n @thiagolopes.bc @botconversa", "script_tiago": "Deixa eu te mostrar como é simples criar um assistente de inteligência artificial."}, {"slide_number": 55, "title": "As 7 Partes De Um Assistente de I.A.", "slide_text": "As 7 Partes De Um Assistente de I.A. \n @thiagolopes.bc @botconversa", "script_tiago": "Existem 7 partes para um assistente de inteligência artificial.\n\nSe você entender isso aqui, você consegue criar um assistente para qualquer coisa, e eu vou passar parte por parte agora para que você entenda exatamente o que é esperado de cada uma."}, {"slide_number": 56, "title": "Mensagem Inicial", "slide_text": "Mensagem Inicial \n @thiagolopes.bc @botconversa", "script_tiago": "Primeira coisa, é a mensagem inicial"}, {"slide_number": 57, "title": "Mensagem Inicial", "slide_text": "Mensagem Inicial", "script_tiago": "O que é a mensagem inicial?\n\nÉ o comando que você vai dar para a IA para ela iniciar a conversa.\n\nEntão, você vai falar para ela:\n\n“Olha, eu quero que você envie essa mensagem para o contato para ele responder e a interação começar.”\n\nOu você fala:\n\n“Eu quero que você comece a conversa assim…”\n\nVocê pode falar para a inteligência artificial os dois jeitos que a interação pode começar.\n\nVocê pode falar para ela:\n\n“Olha, manda a mensagem, espera ele responder e aí começa a interação.”\n\nOu:\n\n“Já inicia a conversa assim, já inicia a conversa falando com o cliente XPTO.”\n\nEntão, a primeira parte do seu assistente é você falar, definir como que a interação vai começar."}, {"slide_number": 58, "title": "Instruções", "slide_text": "Instruções \n @thiagolopes.bc @botconversa", "script_tiago": "Segunda parte é você configurar as instruções deste assistente.\n\nO que são as instruções?\n\nSão os comandos deste assistente. Ele precisa saber: “Tá, o que que eu tenho que fazer?”\n\nÉ basicamente você falar para o assistente o que ele deve fazer."}, {"slide_number": 59, "title": "Instruções", "slide_text": "Instruções", "script_tiago": "Aqui em instrução tem dois tipos de instruções.\n\nA gente tem a instrução do assistente, que é você falar para ele:\n\n“Olha, a sua função é essa. Eu quero que você faça isso, isso e isso. Colete essa, essa e essa informação.”\n\nEntão, você vai falar para ele qual é a função dele, qual que é o objetivo dele.\n\nEm instruções individuais, você pode falar para esse assistente informações do cliente:\n\n“O nome do cliente é o campo tal. O plano de interesse dele é o campo tal. A mensalidade que ele está é o campo tal.”\n\nVocê dá informações individuais de cada pessoa que vai passar ali na conversa.\n\nÉ óbvio que você não precisa digitar para todas as pessoas, são campos que vão substituindo.\n\nEntão, você já definiu como a conversa inicia e definiu agora o que o assistente tem que fazer."}, {"slide_number": 60, "title": "Contexto", "slide_text": "Contexto", "script_tiago": "A próxima coisa que você tem que fazer é dar contexto para este assistente.\n\nVocê vai falar para ele:\n\n“Olha, você vai começar a conversa assim. Você tem que fazer isso. O seu objetivo é…”\n\nEle vai pensar:\n\n“Tá, eu tenho que fazer isso, mas eu tenho que gerar isso para seu nicho com essa e essa informação. Mas quais são os procedimentos que temos? Qual o horário que a gente abre? Qual é o nosso endereço?”\n\nQuais são as informações que esse assistente precisa saber para ele conseguir responder qualquer pergunta que chegue e continue passando pelo processo de coletar informações que você determinou na instrução, que você colocou como objetivo para ele?\n\nEntão, você dá um contexto:\n\n“Olha, esses são os procedimentos. A gente abre nesse horário. Se o cliente fala sobre isso, você fala sobre isso.”"}, {"slide_number": 61, "title": "Contexto", "slide_text": "Contexto", "script_tiago": "Enfim, você dá contexto para ele.\n\nVocê pode escrever o contexto ou pode subir um arquivo, um PDF, por exemplo."}, {"slide_number": 62, "title": "Modelo LLM + Temperatura", "slide_text": "Modelo LLM + Temperatura \n @thiagolopes.bc @botconversa", "script_tiago": "Depois, você escolhe qual que vai ser a inteligência que esse assistente vai ter.\n\nVocê falou:\n\n“Olha, você vai começar assim, sua função é essa, esse aqui é o contexto.”"}, {"slide_number": 63, "title": "Modelo LLM + Temperatura", "slide_text": "Modelo LLM + Temperatura \n @thiagolopes.bc @botconversa", "script_tiago": "E eu quero que você utilize esse nível de inteligência.\n\nOu seja, eu quero que você utilize esse modelo do GPT.\n\nE temperatura é você falar pro assistente:\n\n“Eu quero que você seja muito criativo.”\n\nOu:\n\n“Eu quero que você foque exatamente nas informações que eu te dei. Não vai alucinar, não vai criar nada fora do que eu te dei.”\n\nQuanto maior o número, mais criativo ele fica.\n\nQuanto menor é o número, mais preso nas informações que você deu para ele ele vai ter que ficar.\n\nEntão, determinamos como que começa, qual é a instrução que ele vai ter, qual é o objetivo, qual é o contexto e qual é o nível de inteligência e criatividade."}, {"slide_number": 64, "title": "Atraso + Inatividade", "slide_text": "Atraso + Inatividade \n @thiagolopes.bc @botconversa", "script_tiago": "Agora você determina o atraso e a inatividade"}, {"slide_number": 65, "title": "Atraso + Inatividade", "slide_text": "Atraso + Inatividade \n @thiagolopes.bc @botconversa", "script_tiago": "Agora, você vai determinar:\n\n“Olha, eu quero que você espere 10 segundos para você responder o cliente, porque nesses 10 segundos, se o cliente mandar outra mensagem, você espera 10 segundos novamente. Só depois desses 10 acabarem que aí você manda.”\n\nAssim, dá tempo para você agrupar as mensagens.\n\nEntão, por exemplo:\n\n“Eu quero que você espere um minuto e aí você continua a conversa.”\n\nEle vai esperar 1 minuto. Se não tiver nenhuma nova mensagem, aí ele agrupa tudo, entende o que o cliente mandou e aí ele responde.\n\nE a segunda coisa é você falar pro assistente:\n\n“Se o cliente demorar 30 minutos, 1 hora, 10 horas para responder, você vai ser inativo. Você vai interromper o atendimento e aí o cliente vai para outro caminho aqui na conversa.”\n\nEntão, esse é o próximo passo.\n\nA gente falou como que a conversa começa, qual que é a função do assistente, qual é o contexto que ele tem, qual é o nível de inteligência que ele vai utilizar e, agora, a gente está falando quanto tempo ele demora para responder e em quanto tempo ele vai encerrar o atendimento.\n\nPróximo item…"}, {"slide_number": 66, "title": "Saídas de Sucesso, Interrupção e Condicional", "slide_text": "Saídas de Sucesso, Interrupção e Condicional \n @thiagolopes.bc @botconversa", "script_tiago": "São as saídas que você determina para o assistente.\n\nÉ você falar para o assistente o seguinte:\n\n“Já te falei tudo, agora eu quero que você determine que é um sucesso. Ou seja, se você coletar essa informação, se você coletar essa informação…”"}, {"slide_number": 67, "title": "Saídas de Sucesso, Interrupção e Condicional", "slide_text": "Saídas de Sucesso, Interrupção e Condicional \n @thiagolopes.bc @botconversa", "script_tiago": "“Você fez o seu trabalho, parabéns! A pessoa vai continuar na conversa por aqui.”\n\nAgora, a interrupção: se o cliente falou que ele quer falar com um humano, se ele não quer ser mais atendido, se ele pareceu estar frustrado, interrompe automaticamente. Ele vai seguir por aqui e vai falar com um humano.\n\nE o terceiro são as saídas condicionais.\n\nSe o cliente falar que ele quer falar com a Cíntia, sai por aqui.\n\nSe ele falar que ele quer falar com o financeiro, sai por aqui."}, {"slide_number": 68, "title": "Resumo + Campos Personalizados", "slide_text": "Resumo + Campos Personalizados", "script_tiago": "Por fim, você determina e salva um resumo de toda a interação.\n\nVocê fala pro assistente:\n\n“Olha, toda interação eu quero que você faça um resumo.”\n\nEle já faz isso. Ele faz um resumo de toda a interação de vai e vem na conversa, ele cria um resumo do que que aconteceu e salva em um campo."}, {"slide_number": 69, "title": "Resumo + Campos Personalizados", "slide_text": "Resumo + Campos Personalizados \n @thiagolopes.bc @botconversa", "script_tiago": "Você pode escolher qual campo que vai salvar esse resumo.\n\nAssim como você pode falar:\n\n“Olha, se ele falar alguma coisa sobre procedimento, salva aqui. Se ele falar alguma coisa sobre o dia que ele pode vir aqui, salva aqui.”\n\nEntão, você pode criar vários campos personalizados e falar pro assistente o que que ele pode salvar em cada campo.\n\nEntão, essas aqui são as 7 partes de um assistente de IA. Se você entende cada uma dessas partes, você consegue criar o assistente que você quiser para fazer o que você quiser no seu negócio: o qualificador, o resolutivo para tirar dúvidas, o transacional e o especialista."}, {"slide_number": 70, "title": "Bom, vamos falar agora do segredo...", "slide_text": "As 3 Estratégias Mais Fáceis Para Ver O Ponteiro Das Vendas Andar Em Menos De 7 Dias \n @thiagolopes.bc @botconversa @blinkchat.oficial", "script_tiago": "Bom, vamos falar agora do segredo número três.\n\nEu quero te falar das 3 estratégias mais fáceis para você ver o ponteiro das suas vendas andar em menos de 7 dias implementando a inteligência artificial."}, {"slide_number": 71, "title": "A primeira estratégia é você filtrar e...", "slide_text": "", "script_tiago": "A primeira estratégia é você filtrar e aquecer.\n\nÉ você combinar um assistente qualificador com um resolutivo.\n\nPrimeiro, que você já vai matar 100% dos problemas de tempo de resposta. Você não vai ter mais nenhum cliente mandando mensagem e demorando demais para receber uma resposta.\n\nO assistente qualificador, assim que o seu cliente manda mensagem, já responde e entende o que o cliente precisa.\n\nSe o cliente tem alguma dúvida, se ele tem alguma questão sobre produto, sobre preço, sobre endereço, o qualificador já manda para o assistente resolutivo, que tem todas as informações do seu negócio, responde e você para de responder dúvida repetitiva, você para de perder tempo com atendimento que não deveria estar perdendo tempo — e já deixa isso no automático com uma inteligência artificial."}, {"slide_number": 72, "title": "Segunda estratégia para você...", "slide_text": "", "script_tiago": "Segunda estratégia para você transformar interesse em decisão.\n\nEntão, essa pessoa pode chegar ali no resolutivo e dizer:\n\n“Ah, gostei demais e quero comprar.”\n\nVocê pode trazer essa pessoa para um assistente transacional, que sabe exatamente qual é o seu processo de venda.\n\nO que que você precisa saber, por exemplo, para mandar uma chave Pix para a pessoa?\n\nO que que você precisa para mandar o link certo para ela?\n\nEntão, o transacional vai fazer isso."}, {"slide_number": 73, "title": "E a terceira estratégia é você criar um...", "slide_text": "", "script_tiago": "E a terceira estratégia é você criar um especialista combinado com transacional.\n\nTenho certeza que você tem vários clientes que não vão aí no seu seu nicho há semanas, ou meses, ou até mais de anos.\n\nVocê pode criar um assistente especialista que vai iniciar a conversa com essas pessoas.\n\nQuando ele identificar que a pessoa tem interesse — porque você criou uma promoção, alguma coisa para o seu negócio — aí ele manda para o transacional fechar a venda.\n\nE essas estratégias você literalmente coloca o seu WhatsApp praticamente com esteróides."}, {"slide_number": 74, "title": "E aí eu tenho uma pergunta para você…", "slide_text": "Bom… \n @thiagolopes.bc     @botconversa   @blinkchat.oficial", "script_tiago": "E aí eu tenho uma pergunta para você…"}, {"slide_number": 75, "title": "Imagino que você deve estar se sentindo...", "slide_text": "Deixa Eu \n Fazer Uma \n Pergunta... \n @thiagolopes.bc     @botconversa     @blinkchat.oficial", "script_tiago": "Imagino que você deve estar se sentindo assim, com a cabeça explodindo com o que dá para fazer hoje no WhatsApp.\n\nE eu quero te fazer uma pergunta.\n\nA gente criou aqui uma condição incrível para donos de negócio que querem implementar inteligência artificial.\n\nA gente está com uma meta ambiciosa de se tornar a maior plataforma — a plataforma preferida de pequenos e médios negócios da América Latina.\n\nE a gente criou uma promoção incrível e eu quero saber se eu posso mostrá-la para você.\n\nBeleza, bom, vamos lá."}, {"slide_number": 76, "title": "O que você vai receber nesta oferta que...", "slide_text": "O Que Você Vai Receber... \n @thiagolopes.bc     @botconversa     @blinkchat.oficial", "script_tiago": "O que você vai receber nesta oferta que a gente criou aqui."}, {"slide_number": 77, "title": "Primeira coisa que você vai receber é...", "slide_text": "BotConversa PRO \n @thiagolopes.bc     @botconversa     @blinkchat.oficial", "script_tiago": "Primeira coisa que você vai receber é acesso ao BotConversa PRO.\n\nO BotConversa PRO permite que você faça qualquer tipo de automação no seu WhatsApp.\n\nVocê pode enviar áudio, imagem, arquivo, texto, vídeo, pode colocar a inteligência artificial para funcionar, pode conectar o seu WhatsApp com qualquer ferramenta que você já utiliza.\n\nVocê tem aplicativo para poder utilizar tanto no Android quanto no iOS.\n\nEntão, imagina: você tem quantos atendentes? 2, 3?\n\nVocê pode colocar esses atendentes, cada um logado no seu aplicativo, para atender pelo mesmo número — todos através do aplicativo.\n\nVocê tem esse aplicativo que tem o bate-papo, e uma conversa pode ser atribuída de uma para outra.\n\nVocê tem um construtor que permite construir esses assistentes, que é um dos mais fáceis do mercado.\n\nPara mim — eu sou suspeito de falar, óbvio — mas para mim ele é o mais fácil do mercado, principalmente se tratando da criação desses assistentes.\n\nVocê entendeu aquelas sete partes? Elas foram difíceis de entender?\n\nNão! Por que não foram? Porque pensamos exatamente qual é o passo a passo que o dono de negócio precisa entender para ele criar um assistente poderoso.\n\nEntão, a gente criou isso e, pra gente, é a melhor solução do mercado.\n\nEntão, a gente vai te dar acesso à ferramenta do BotConversa PRO.\n\nVocê vai conseguir conversar, vai conseguir fazer disparo em massa… enfim, vai conseguir fazer tudo."}, {"slide_number": 78, "title": "Então, o BotConversa PRO hoje, se você...", "slide_text": "O Que Você Vai Receber... \n @thiagolopes.bc     @botconversa     @blinkchat.oficial", "script_tiago": "Então, o BotConversa PRO hoje, se você visitar o nosso site, ele custa 297 reais por mês.\n\nMas não é só isso que a gente colocou na oferta."}, {"slide_number": 79, "title": "A gente também vai te entregar os...", "slide_text": "O Que Você Vai Receber...", "script_tiago": "A gente também vai te entregar os custos da IA, da mesma IA do ChatGPT.\n\nA empresa dona do ChatGPT se chama OpenAI, e a inteligência artificial utilizada pelo ChatGPT é a inteligência artificial da empresa OpenAI.\n\nEntão, essa inteligência — a gente vai bancar esse custo para você.\n\nSe você quer colocar essa inteligência hoje no seu WhatsApp, você precisa criar uma conta na OpenAI, cadastrar um cartão de crédito internacional e depositar no mínimo 10 dólares ali, o que vai dar cerca de 60 reais por mês para você gastar isso aí.\n\nA gente vai pagar isso aí para você, então você não vai precisar se preocupar com esse custo. A gente vai pagar isso para você.\n\nTotalizando, fica 357 reais essa oferta só com esses dois itens.\n\nMas não é só isso que você vai receber."}, {"slide_number": 80, "title": "Você também vai receber acesso ao GPT...", "slide_text": "O Que Você Vai Receber...", "script_tiago": "Você também vai receber acesso ao GPT Especialista.\n\nO que que é o GPT Especialista?\n\nVocê viu ali as 7 partes que você precisa criar de informação pro assistente?\n\nO GPT Especialista é uma ferramenta que a gente criou que funciona como se fosse o ChatGPT, mas ele é o ChatGPT focado em criar apenas instruções para assistentes do BotConversa.\n\nEntão, a gente criou uma inteligência artificial que entende tudo dos assistentes do BotConversa para você apenas falar pro GPT:\n\n“Olha, eu preciso criar um assistente que faz isso, isso e isso.”\n\nE ele vai te dar instrução por instrução.\n\nDeixa eu te mostrar aqui na tela, só para você ver um exemplo:\n\n{MOSTRE O GPT ESPECIALISTA PARA O CLIENTE, ABRA UMA NOVA CONVERSA COM O GPT ESPECIALISTA, COMPARTILHE A TELA COM O CLIENTE E FAÇA UMA CONVERSA FICTÍCIA}\n\n(APÓS APRESENTAR SIGA O SCRIPT)\n\nVocê viu que criar aquelas sete partes, por mais que pareça um pouco complexo ou informação demais, é extremamente fácil porque a inteligência artificial cria isso para você.\n\nVocê literalmente precisa falar o que você quer que o assistente faça.\n\nE a gente criou uma inteligência artificial que vai criar exatamente — vamos dizer — como se fosse o job description, a descrição de trabalho daquele assistente.\n\nEle vai falar:\n\n“Olha, você vai fazer isso.”\n\nEntão, é muito fácil você criar hoje um assistente, porque eu tenho certeza que, se você procurar no mercado, não tem nenhum concorrente que oferece uma solução como essa.\n\nE você vai receber acesso a essa ferramenta na oferta que a gente criou para você hoje.\n\nIsso aqui totalizaria 454 reais por mês.\n\nVocê não vai precisar pagar esse valor."}, {"slide_number": 81, "title": "Você também vai receber acesso ao...", "slide_text": "", "script_tiago": "Você também vai receber acesso ao BotConversa Prime, que é a nossa área de membros onde você consegue ter acesso a todos os nossos treinamentos.\n\nTodas as aulas que você precisa estão ali. Você tem acesso também às aulas ao vivo\n\nSão 12 aulas ao vivo toda semana.\n\nVocê pode entrar em uma dessas aulas ao vivo sobre inteligência artificial: como criar um assistente de vendas, como criar um assistente disso, como criar um assistente daquilo…\n\nTem aulas ao vivo todos os dias, pelo menos 2 aulas ao vivo por dia.\n\nVocê vai ter acesso a esse BotConversa Prime. Ele tem um valor incalculável.\n\nNão dá para falar: “Ah, a gente vai cobrar 100 reais, 200 reais.”\n\nPorque, às vezes, uma dica ali em uma aula ou algum outro empresário pode te ajudar a faturar de 2, 3, a 5 mil reais.\n\nEntão, é um valor incalculável.\n\nE você também recebe suporte premium da nossa equipe.\n\nVocê tem acesso ao suporte da nossa equipe em um chat na nossa central de ajuda, das 08 da manhã às 22:00, de segunda à sexta, e no sábado vai até às 17:00.\n\nEntão, você recebe tudo isso na oferta que eu preparei para você, que no valor total seria de 454 reais."}, {"slide_number": 82, "title": "Bom, quando a gente criou essa oferta...", "slide_text": "Nós Tínhamos Duas Opções \n @thiagolopes.bc     @botconversa     @blinkchat.oficial", "script_tiago": "Bom, quando a gente criou essa oferta aqui que eu tô prestes a mostrar para você, a gente tinha duas opções.\n\nA gente podia tentar criar a oferta mais cara e compatível com os números do mercado dos concorrentes hoje.\n\nSe você pesquisar aí no Google, se você já pesquisou, você sabe do que eu tô falando.\n\nMas, se você pesquisar, você vai ver ferramentas cobrando 599, 897, 1879 reais.\n\nE a nossa segunda opção era solicitar um investimento mais realista pro pequeno e médio empresário.\n\nEm troca, a gente consegue abrir essa oportunidade para mais negócios, seguindo o nosso plano ambicioso de nos tornarmos a maior solução para pequenos e médios negócios da América Latina.\n\nE é óbvio que a gente seguiu com a segunda opção."}, {"slide_number": 83, "title": "Se você tivesse que pagar 454 reais...", "slide_text": "Você Pode Ver Que Isso Seria Um Bom Negócio em R$454 \n R$370 \n Ainda Seria Mais Barato Que 90% Dos Concorrentes", "script_tiago": "Se você tivesse que pagar 454 reais aqui, eu tenho certeza que você sabe que seria um bom negócio.\n\nPorque, se o que eu tô te falando aqui pode te trazer uma venda a mais no mês ou duas vendas a mais no mês, isso aqui já tá mais do que pago.\n\nEntão, isso aqui seria um bom negócio se fosse só 454.\n\nSe fosse 370 reais, ainda sim seria um negócio mais barato que 90% dos concorrentes.\n\nMas a gente tem algo ainda melhor.\n\nPra gente fechar aqui hoje nessa apresentação com você."}, {"slide_number": 84, "title": "Você pode garantir tudo isso da oferta...", "slide_text": "Reserve Sua Vaga AGORA Mesmo Por \n @thiagolopes.bc     @botconversa     @blinkchat.oficial", "script_tiago": "Você pode garantir tudo isso da oferta por apenas 297 reais por mês.\n\nNesse valor de 297, você vai receber o BotConversa, a gente vai bancar os custos da IA para você, a gente vai te dar acesso à ferramenta do GPT Especialista, a gente vai te dar treinamento e aula ao vivo todo dia, e você vai ter suporte da nossa equipe, pagando apenas 297 reais por mês se você pagar no plano mensal.\n\nSe você quiser um desconto ainda maior, eu consigo uma mensalidade de 197 reais por mês se você fechar o plano anual aqui comigo.\n\nQual plano faz mais sentido para você?\n\nVocê prefere seguir com o plano mensal ou você prefere seguir com o plano anual?\n\nRetorne para o nosso parceiro no WhatsApp com a sua decisão.\n\nEspero, de coração, que você faça a escolha que realmente faça sentido para você e para o seu negócio!\n\nE, se a sua decisão for se juntar à nossa comunidade, seja muito bem-vindo!\n\nTenha certeza de que faremos o nosso melhor para ajudar você a desenvolver o seu negócio, alcançar novos resultados e, quem sabe, até transformar a sua vida para melhor!\n\nEstamos juntos nessa jornada!"}];
+    let currentIdx = 0;
+    let currentSpeed = 1.0;
+    const speeds = [1.0, 1.25, 1.5, 2.0];
+
+    // Elementos DOM
+    const audioPlayer = document.getElementById('audioPlayer');
+    const slideImg = document.getElementById('slideImg');
+    const scriptContent = document.getElementById('scriptContent');
+    const slideList = document.getElementById('slideList');
+    const sidebar = document.getElementById('sidebar');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const visualBox = document.getElementById('visualBox');
+
+    // Botões e textos Desktop
+    const btnPlay = document.getElementById('btnPlay');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnSpeed = document.getElementById('btnSpeed');
+    const btnFullscreen = document.getElementById('btnFullscreen');
+    const autoAdvanceCheckbox = document.getElementById('autoAdvance');
+    const progressBar = document.getElementById('progressBar');
+    const progressContainer = document.getElementById('progressContainer');
+    const timeCurrent = document.getElementById('timeCurrent');
+    const timeDuration = document.getElementById('timeDuration');
+
+    // Botões e textos Mobile
+    const btnMobPlay = document.getElementById('btnMobPlay');
+    const btnMobPrev = document.getElementById('btnMobPrev');
+    const btnMobNext = document.getElementById('btnMobNext');
+    const btnMobSpeed = document.getElementById('btnMobSpeed');
+    const btnMobFs = document.getElementById('btnMobFs');
+    const btnMobileDrawer = document.getElementById('btnMobileDrawer');
+    const btnCloseSidebar = document.getElementById('btnCloseSidebar');
+    const mobileSlideCount = document.getElementById('mobileSlideCount');
+    const slideIndicatorHeader = document.getElementById('slideIndicatorHeader');
+    const mobProgressBar = document.getElementById('mobProgressBar');
+    const mobProgressContainer = document.getElementById('mobProgressContainer');
+    const mobTimeCurrent = document.getElementById('mobTimeCurrent');
+    const mobTimeDuration = document.getElementById('mobTimeDuration');
+
+    // HUD Tela cheia
+    const btnFsToggle = document.getElementById('btnFsToggle');
+    const btnFsPrev = document.getElementById('btnFsPrev');
+    const btnFsPlay = document.getElementById('btnFsPlay');
+    const btnFsNext = document.getElementById('btnFsNext');
+    const btnFsExit = document.getElementById('btnFsExit');
+    const fsHudTitle = document.getElementById('fsHudTitle');
+
+    function renderSlideList() {
+      slideList.innerHTML = '';
+      slidesData.forEach((s, idx) => {
+        const item = document.createElement('div');
+        item.className = `slide-item ${idx === currentIdx ? 'active' : ''}`;
+        const titleText = s.title || ('Slide ' + s.slide_number);
+        item.innerHTML = `
+          <div class="slide-badge">${s.slide_number}</div>
+          <div class="slide-info" title="${titleText}">${titleText}</div>
+        `;
+        item.onclick = () => {
+          loadSlide(idx, true);
+          closeDrawer();
+        };
+        slideList.appendChild(item);
+      });
+    }
+
+    function loadSlide(idx, autoplay = false) {
+      currentIdx = idx;
+      const s = slidesData[idx];
+      const padNum = String(s.slide_number).padStart(3, '0');
+      const padAudio = String(s.slide_number).padStart(2, '0');
+
+      slideImg.src = `frames_2026/slide_${padNum}.png?v=11`;
+      scriptContent.textContent = s.script_tiago;
+      scriptContent.scrollTop = 0;
+
+      const slideTitleStr = `${s.slide_number}/84 • ${s.title || 'Slide ' + s.slide_number}`;
+      fsHudTitle.textContent = slideTitleStr;
+      mobileSlideCount.textContent = `Slide ${s.slide_number}/84`;
+      slideIndicatorHeader.textContent = `${s.slide_number} / 84`;
+
+      audioPlayer.src = `audios_tiago_2026/Slide_${padAudio}.mp3?v=2`;
+      audioPlayer.playbackRate = currentSpeed;
+
+      renderSlideList();
+      const activeEl = slideList.children[idx];
+      if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      if (autoplay) {
+        audioPlayer.play().then(() => {
+          updatePlayButtonsState(true);
+        }).catch(() => {
+          updatePlayButtonsState(false);
+        });
+      } else {
+        updatePlayButtonsState(false);
+      }
+
+      progressBar.style.width = '0%';
+      if (mobProgressBar) mobProgressBar.style.width = '0%';
+      timeCurrent.textContent = '00:00';
+      if (mobTimeCurrent) mobTimeCurrent.textContent = '00:00';
+    }
+
+    function updatePlayButtonsState(isPlaying) {
+      const playText = isPlaying ? '⏸️ Pausar' : '▶️ Reproduzir';
+      const mobPlayText = isPlaying ? '⏸️ Pause' : '▶️ Play';
+      btnPlay.textContent = playText;
+      btnMobPlay.textContent = mobPlayText;
+      btnFsPlay.textContent = isPlaying ? '⏸️' : '▶️';
+    }
+
+    function togglePlay() {
+      if (audioPlayer.paused) {
+        audioPlayer.play().then(() => {
+          updatePlayButtonsState(true);
+        }).catch(err => console.error(err));
+      } else {
+        audioPlayer.pause();
+        updatePlayButtonsState(false);
+      }
+    }
+
+    function nextSlide(autoplay = false) {
+      if (currentIdx < slidesData.length - 1) {
+        loadSlide(currentIdx + 1, autoplay);
+      }
+    }
+
+    function prevSlide(autoplay = false) {
+      if (currentIdx > 0) {
+        loadSlide(currentIdx - 1, autoplay);
+      }
+    }
+
+    function cycleSpeed() {
+      const currentSpeedIdx = speeds.indexOf(currentSpeed);
+      const nextIdx = (currentSpeedIdx + 1) % speeds.length;
+      currentSpeed = speeds[nextIdx];
+      audioPlayer.playbackRate = currentSpeed;
+      const speedStr = `${currentSpeed.toFixed(currentSpeed === 1.0 ? 1 : 2)}x`;
+      btnSpeed.textContent = speedStr;
+      btnMobSpeed.textContent = speedStr;
+    }
+
+    function openDrawer() {
+      sidebar.classList.add('open');
+      drawerBackdrop.classList.add('active');
+    }
+
+    function closeDrawer() {
+      sidebar.classList.remove('open');
+      drawerBackdrop.classList.remove('active');
+    }
+
+    // Formatação de tempo mm:ss
+    function formatTime(sec) {
+      if (isNaN(sec) || sec === Infinity) return '00:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    // Atualização de progresso do áudio
+    audioPlayer.addEventListener('timeupdate', () => {
+      const cur = audioPlayer.currentTime;
+      const dur = audioPlayer.duration;
+      if (dur > 0) {
+        const pct = (cur / dur) * 100;
+        progressBar.style.width = `${pct}%`;
+        if (mobProgressBar) mobProgressBar.style.width = `${pct}%`;
+        timeCurrent.textContent = formatTime(cur);
+        timeDuration.textContent = formatTime(dur);
+        if (mobTimeCurrent) mobTimeCurrent.textContent = formatTime(cur);
+        if (mobTimeDuration) mobTimeDuration.textContent = formatTime(dur);
+      }
+    });
+
+    audioPlayer.addEventListener('loadedmetadata', () => {
+      timeDuration.textContent = formatTime(audioPlayer.duration);
+      if (mobTimeDuration) mobTimeDuration.textContent = formatTime(audioPlayer.duration);
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+      updatePlayButtonsState(false);
+      if (autoAdvanceCheckbox && autoAdvanceCheckbox.checked) {
+        if (currentIdx < slidesData.length - 1) {
+          nextSlide(true);
+        }
+      }
+    });
+
+    // Scrub de progresso
+    function handleSeek(e, container) {
+      const rect = container.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      if (audioPlayer.duration) {
+        audioPlayer.currentTime = pos * audioPlayer.duration;
+      }
+    }
+    progressContainer.addEventListener('click', (e) => handleSeek(e, progressContainer));
+    if (mobProgressContainer) {
+      mobProgressContainer.addEventListener('click', (e) => handleSeek(e, mobProgressContainer));
+    }
+
+    // Eventos Desktop
+    btnPlay.addEventListener('click', togglePlay);
+    btnPrev.addEventListener('click', () => prevSlide(true));
+    btnNext.addEventListener('click', () => nextSlide(true));
+    btnSpeed.addEventListener('click', cycleSpeed);
+
+    // Eventos Mobile
+    btnMobPlay.addEventListener('click', togglePlay);
+    btnMobPrev.addEventListener('click', () => prevSlide(true));
+    btnMobNext.addEventListener('click', () => nextSlide(true));
+    btnMobSpeed.addEventListener('click', cycleSpeed);
+    btnMobileDrawer.addEventListener('click', openDrawer);
+    btnCloseSidebar.addEventListener('click', closeDrawer);
+    drawerBackdrop.addEventListener('click', closeDrawer);
+
+    // Fullscreen Handlers
+    function toggleFullscreen() {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (visualBox.requestFullscreen) {
+          visualBox.requestFullscreen();
+        } else if (visualBox.webkitRequestFullscreen) {
+          visualBox.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+
+    btnFullscreen.addEventListener('click', toggleFullscreen);
+    btnFsToggle.addEventListener('click', toggleFullscreen);
+    btnFsExit.addEventListener('click', toggleFullscreen);
+    if (btnMobFs) btnMobFs.addEventListener('click', toggleFullscreen);
+    visualBox.addEventListener('dblclick', toggleFullscreen);
+
+    btnFsPrev.addEventListener('click', () => prevSlide(true));
+    btnFsNext.addEventListener('click', () => nextSlide(true));
+    btnFsPlay.addEventListener('click', togglePlay);
+
+    // Atalhos de Teclado
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        nextSlide(true);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide(true);
+      } else if (e.code === 'KeyF') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+
+    // Inicialização
+    loadSlide(0, false);
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+# Ambientes e Segredos
+.env
+.env.*
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# Vercel
+.vercel
+
+# Arquivos de Mídia Pesados Legados
+*.mp4
+*.wav
+*.aac
+*.avi
+*.mov
+*.docx
+*.pptx
+*.pdf
+*.db
+*.ogg
+
+# Imagens de Teste e Debug Temporárias
+test_*.png
+check_*.png
+crop_*.png
+screenshot_*.png
+card*.png
+s4*.png
+s6*.png
+u_*.png
+quando_*.png
+cursor_*.png
+diff_*.png
+clean_u_stamp.png
+comp_quando_usar.png
+frame_test_*.jpg
+
+# Scripts e arquivos temporários de análise
+analyze_ajuda.py
+inspect_botconversa.py
+inspect_resumida.py
+update_slide_titles.py
+print_titles.py
+test_splice.py
+smooth_splice.py
+edit_audio.py
+generate_kb.py
+parse_leads.py
+populate_spreadsheet.py
+servidor_webhook_agendamento.py
+detailed_lead_analysis.py
+gerar_apresentacao_diagnostico.py
+gerar_audio_e_video_perfeito.py
+gerar_video_apresentacao.py
+google_apps_script_lembrete_botconversa.js
+
+# Arquivos Legados Antigos de Atendimento
+ajuda_botconversa.html
+botconversa_style.css
+botconversa_style2.css
+/slide_*.png
+slide_pdf_*.png
+slide_pptx_*.png
+audio_*.mp3
+audio_*.wav
+tail_*.wav
+jerri_*
+concat_*
+slides_script_raw.json
+slides_timeline_2026.txt
+audio_concat_2026.txt
+extracted_script.txt
+link_diagnostico_atual.txt
+partner_journey_notes.txt
+Base_de_Conhecimento_Diagnostico_Botconversa.txt
+Configuracao_Assistente_GPT_Botconversa.md
+test_tiago.mp3
