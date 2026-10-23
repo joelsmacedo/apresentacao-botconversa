@@ -353,64 +353,126 @@ def generate_player_html():
       border-color: var(--primary);
     }}
 
-    /* FULLSCREEN NATIVO */
+    /* BOTÃO DISCRETO PARA VOLTAR DA TELA CHEIA */
+    .fs-exit-btn {{
+      display: none;
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      top: max(14px, env(safe-area-inset-top, 14px));
+      right: max(14px, env(safe-area-inset-right, 14px));
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(18, 19, 22, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: rgba(255, 255, 255, 0.88);
+      cursor: pointer;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      padding: 0;
+    }}
+    .fs-exit-btn:hover {{
+      background: rgba(30, 41, 59, 0.92);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #fff;
+      transform: scale(1.06);
+    }}
+    .fs-exit-btn:active {{
+      transform: scale(0.92);
+      background: rgba(239, 68, 68, 0.85);
+    }}
+
+    /* BOTÃO DE VELOCIDADE EM TELA CHEIA */
+    .fs-speed-btn {{
+      display: none;
+      position: absolute;
+      top: 14px;
+      right: 64px;
+      top: max(14px, env(safe-area-inset-top, 14px));
+      right: max(64px, env(safe-area-inset-right, 64px));
+      height: 40px;
+      padding: 0 13px;
+      border-radius: var(--radius-pill);
+      background: rgba(18, 19, 22, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #93c5fd;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+    }}
+    .fs-speed-btn:hover {{
+      background: rgba(30, 41, 59, 0.95);
+      border-color: var(--primary);
+      color: #fff;
+      transform: scale(1.05);
+    }}
+    .fs-speed-btn:active {{
+      transform: scale(0.95);
+    }}
+    .fs-speed-btn.speed-modified {{
+      border-color: rgba(48, 131, 255, 0.8);
+      color: #60a5fa;
+      box-shadow: 0 0 12px rgba(48, 131, 255, 0.35);
+    }}
+
+    /* FULLSCREEN SEM AVISOS INTRUSIVOS */
+    .visual-box.is-fullscreen,
     .visual-box:fullscreen,
     .visual-box:-webkit-full-screen {{
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
+      max-height: none !important;
       border: none;
       border-radius: 0;
       background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 99999;
     }}
     .visual-box:fullscreen img,
-    .visual-box:-webkit-full-screen img {{
+    .visual-box:-webkit-full-screen img,
+    .visual-box.is-fullscreen img {{
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
+      max-height: none !important;
       object-fit: contain;
-    }}
-    .fs-hud {{
-      display: none;
-      position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(18, 19, 22, 0.92);
-      border: 1px solid rgba(48, 131, 255, 0.3);
-      padding: 8px 20px;
-      border-radius: var(--radius-pill);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-      align-items: center;
-      gap: 14px;
-      z-index: 50;
-    }}
-    .visual-box:fullscreen .fs-hud,
-    .visual-box:-webkit-full-screen .fs-hud {{
-      display: flex;
-    }}
-    .fs-hud-title {{
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #93c5fd;
-      max-width: 260px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }}
-    .fs-hud button {{
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      color: #fff;
-      padding: 6px 12px;
-      font-size: 0.82rem;
-      border-radius: var(--radius-sm);
       cursor: pointer;
     }}
-    .fs-hud button:hover {{
-      background: var(--primary);
+    .visual-box:fullscreen .fullscreen-btn,
+    .visual-box:-webkit-full-screen .fullscreen-btn,
+    .visual-box.is-fullscreen .fullscreen-btn {{
+      display: none !important;
+    }}
+    .visual-box:fullscreen .fs-exit-btn,
+    .visual-box:-webkit-full-screen .fs-exit-btn,
+    .visual-box.is-fullscreen .fs-exit-btn,
+    .visual-box:fullscreen .fs-speed-btn,
+    .visual-box:-webkit-full-screen .fs-speed-btn,
+    .visual-box.is-fullscreen .fs-speed-btn {{
+      display: flex !important;
+    }}
+    .fs-hud {{
+      display: none !important;
     }}
 
     /* SCRIPT BOX */
@@ -514,26 +576,389 @@ def generate_player_html():
       background: var(--bg-surface-hover);
       border-color: var(--border-strong);
     }}
+    /* BOTÕES DE PLAY/PAUSE (DESIGN SYSTEM HERO ACTION) */
     button.btn-ctrl.primary {{
-      background: var(--primary);
-      border-color: var(--primary);
+      background: linear-gradient(135deg, #3083FF 0%, #155DFC 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 14px rgba(48, 131, 255, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }}
     button.btn-ctrl.primary:hover {{
-      background: var(--primary-hover);
+      background: linear-gradient(135deg, #4491FF 0%, #1F66FF 100%);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 6px 20px rgba(48, 131, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
     }}
+    button.btn-ctrl.primary:active {{
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 2px 8px rgba(48, 131, 255, 0.4);
+    }}
+
+    /* ESTADO EM REPRODUÇÃO ATIVA (IS-PLAYING / PAUSAR) */
+    button.btn-ctrl.primary.is-playing {{
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border-color: rgba(254, 243, 199, 0.3);
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      animation: audioPulse 2.4s infinite ease-in-out;
+    }}
+    button.btn-ctrl.primary.is-playing:hover {{
+      background: linear-gradient(135deg, #fbbf24 0%, #b45309 100%);
+      border-color: rgba(254, 243, 199, 0.45);
+      box-shadow: 0 6px 22px rgba(245, 158, 11, 0.55);
+      transform: translateY(-1px);
+    }}
+
+    @keyframes audioPulse {{
+      0%, 100% {{
+        box-shadow: 0 4px 14px rgba(245, 158, 11, 0.38);
+      }}
+      50% {{
+        box-shadow: 0 4px 22px rgba(245, 158, 11, 0.65);
+      }}
+    }}
+    /* CONTROLE AVANÇADO DE VELOCIDADE (TSM / DSP) */
     button.btn-speed {{
       background: var(--bg-surface);
       border: 1px solid var(--border);
       color: #93c5fd;
-      padding: 6px 10px;
+      padding: 6px 11px;
       border-radius: var(--radius-sm);
       font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      user-select: none;
     }}
-    button.btn-speed:hover {{
+    button.btn-speed:hover,
+    button.btn-speed.active {{
       background: var(--primary-light);
       border-color: var(--primary);
+      color: #fff;
+    }}
+    button.btn-speed.speed-modified {{
+      background: rgba(48, 131, 255, 0.16);
+      border-color: rgba(48, 131, 255, 0.55);
+      color: #60a5fa;
+      box-shadow: 0 0 10px rgba(48, 131, 255, 0.2);
+    }}
+    .speed-chevron {{
+      font-size: 0.65rem;
+      opacity: 0.75;
+      margin-left: 2px;
+      transition: transform 0.2s ease;
+    }}
+    button.btn-speed.active .speed-chevron {{
+      transform: rotate(180deg);
+    }}
+
+    /* BACKDROP DO MENU DE VELOCIDADE */
+    .speed-menu-backdrop {{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 998;
+      display: none;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }}
+    .speed-menu-backdrop.active {{
+      display: block;
+    }}
+
+    /* POPOVER MENU DE VELOCIDADE */
+    .speed-popover {{
+      position: fixed;
+      z-index: 1000;
+      width: 310px;
+      background: rgba(18, 19, 22, 0.96);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.8), 0 0 20px rgba(48, 131, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px) scale(0.96);
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+    }}
+    .speed-popover.open {{
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }}
+
+    .speed-popover-header {{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 11px;
+    }}
+    .speed-popover-title {{
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }}
+    .speed-popover-title span:first-child {{
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }}
+    .pitch-badge {{
+      font-size: 0.67rem;
+      color: var(--brand-green);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }}
+    .speed-menu-close {{
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.95rem;
+      padding: 4px 6px;
+      border-radius: var(--radius-sm);
+      line-height: 1;
+      transition: all 0.15s;
+    }}
+    .speed-menu-close:hover {{
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }}
+
+    /* GRID DE PRESETS */
+    .speed-presets-grid {{
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }}
+    .speed-preset-btn {{
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 7px 4px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }}
+    .speed-preset-btn span {{
+      display: block;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      font-weight: 400;
+      line-height: 1;
+      margin-top: 2px;
+    }}
+    .speed-preset-btn:hover {{
+      background: var(--bg-surface-hover);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }}
+    .speed-preset-btn.active {{
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(48, 131, 255, 0.45);
+    }}
+    .speed-preset-btn.active span {{
+      color: rgba(255, 255, 255, 0.9);
+    }}
+
+    /* AJUSTE FINO (STEPPER + RANGE) */
+    .speed-stepper-row {{
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 9px 11px;
+      margin-bottom: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }}
+    .stepper-header {{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }}
+    .fine-speed-display {{
+      font-family: monospace;
+      font-weight: 700;
+      color: #93c5fd;
+      font-size: 0.85rem;
+    }}
+    .stepper-controls {{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }}
+    .stepper-btn {{
+      width: 26px;
+      height: 26px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: all 0.15s;
+    }}
+    .stepper-btn:hover {{
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: #fff;
+    }}
+    .speed-range-slider {{
+      flex: 1;
+      accent-color: var(--primary);
+      cursor: pointer;
+      height: 4px;
+    }}
+
+    /* RODAPÉ DO POPOVER */
+    .speed-popover-footer {{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }}
+    .speed-shortcut-hint b {{
+      color: var(--text-muted);
+    }}
+    .speed-reset-btn {{
+      background: transparent;
+      border: none;
+      color: #93c5fd;
+      font-size: 0.72rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 2px 4px;
+      transition: color 0.15s;
+    }}
+    .speed-reset-btn:hover {{
+      color: #fff;
+    }}
+
+    /* OSD (ON-SCREEN DISPLAY) PARA FEEDBACK DE VELOCIDADE */
+    .speed-osd {{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.85);
+      background: rgba(10, 10, 12, 0.9);
+      border: 1px solid rgba(48, 131, 255, 0.5);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.75), 0 0 20px rgba(48, 131, 255, 0.25);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius-lg);
+      padding: 14px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #fff;
+      z-index: 120;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }}
+    .speed-osd.visible {{
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }}
+    .speed-osd-val-row {{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }}
+    .speed-osd-icon {{
+      font-size: 1.4rem;
+      color: #fbbf24;
+    }}
+    .speed-osd-text {{
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #93c5fd;
+      font-family: monospace;
+    }}
+    .speed-osd-sub {{
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-green);
+      font-weight: 700;
+    }}
+
+    /* FEEDBACK VISUAL DE PLAY/PAUSE EM TELA CHEIA */
+    .fs-play-osd {{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.65);
+      background: rgba(10, 10, 12, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.82), 0 0 24px rgba(48, 131, 255, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 50%;
+      width: 88px;
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      z-index: 125;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }}
+    .fs-play-osd.visible {{
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }}
+    .fs-play-osd-icon {{
+      color: #93c5fd;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }}
+    .fs-play-osd.is-paused .fs-play-osd-icon {{
+      color: #f3f4f6;
     }}
 
     /* PROGRESS BAR */
@@ -766,6 +1191,21 @@ def generate_player_html():
         padding-right: 4px;
       }}
 
+      /* AJUSTE RESPONSIVO DO MENU DE VELOCIDADE */
+      .speed-popover {{
+        position: fixed !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) translateY(12px) scale(0.97) !important;
+        width: calc(100vw - 28px) !important;
+        max-width: 340px !important;
+        bottom: max(20px, env(safe-area-inset-bottom, 20px)) !important;
+        top: auto !important;
+      }}
+      .speed-popover.open {{
+        transform: translateX(-50%) translateY(0) scale(1) !important;
+      }}
+
       /* FOOTER TRADICIONAL É SUBSTITUÍDO PELO FLOATING BAR */
       footer {{
         display: none;
@@ -820,16 +1260,31 @@ def generate_player_html():
           <button id="btnFsToggle" class="fullscreen-btn" title="Tela Cheia (F)">
             ⛶ Tela Cheia
           </button>
-          <img id="slideImg" src="" alt="Slide da Apresentação" title="Clique duas vezes para Tela Cheia">
-          
-          <!-- HUD EM TELA CHEIA -->
-          <div id="fsHud" class="fs-hud">
-            <button id="btnFsPrev" title="Anterior">⏮️</button>
-            <button id="btnFsPlay" title="Reproduzir / Pausar">▶️</button>
-            <button id="btnFsNext" title="Próximo">⏭️</button>
-            <span id="fsHudTitle" class="fs-hud-title">Slide 1 / 84</span>
-            <button id="btnFsExit" title="Sair">✕ Sair</button>
+          <button id="btnFsSpeed" class="fs-speed-btn" title="Alternar Velocidade (Atalhos: < e >)">
+            ⚡ <span id="fsSpeedVal">1.0x</span>
+          </button>
+          <button id="btnFsExit" class="fs-exit-btn" aria-label="Fechar tela cheia">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div id="speedOsd" class="speed-osd" aria-live="polite">
+            <div class="speed-osd-val-row">
+              <span class="speed-osd-icon">⚡</span>
+              <span id="speedOsdText" class="speed-osd-text">1.0x</span>
+            </div>
+            <span class="speed-osd-sub">Tom Preservado (TSM)</span>
           </div>
+          <!-- FEEDBACK VISUAL DE PLAY/PAUSE EM TELA CHEIA (TOQUE NA TELA) -->
+          <div id="fsPlayOsd" class="fs-play-osd" aria-hidden="true">
+            <div id="fsPlayOsdIcon" class="fs-play-osd-icon">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+          </div>
+          <img id="slideImg" src="" alt="Slide da Apresentação">
         </div>
 
         <!-- CONTROLES MOBILE TOUCH (LOGO ABAIXO DO SLIDE) -->
@@ -841,7 +1296,7 @@ def generate_player_html():
               <button id="btnMobNext" class="btn-ctrl" title="Próximo">⏭️</button>
             </div>
             <div class="mobile-btn-group">
-              <button id="btnMobSpeed" class="btn-speed" title="Velocidade da fala">1.0x</button>
+              <button id="btnMobSpeed" class="btn-speed" title="Velocidade de reprodução (TSM)">⚡ <span id="mobSpeedVal">1.0x</span> <span class="speed-chevron">▾</span></button>
               <button id="btnMobFs" class="btn-ctrl" title="Tela Cheia">⛶</button>
             </div>
           </div>
@@ -854,11 +1309,11 @@ def generate_player_html():
           </div>
         </div>
 
-        <!-- QUADRO DO ROTEIRO DO TIAGO (ROLAGEM INDEPENDENTE) -->
+        <!-- QUADRO DA TRANSCRIÇÃO DA APRESENTAÇÃO (ROLAGEM INDEPENDENTE) -->
         <div class="script-box">
           <div class="script-header">
             <div class="script-header-badge">
-              <span>🎙️ ROTEIRO DO TIAGO (1ª PESSOA • FALA DINÂMICA)</span>
+              <span>Transcrição da Apresentação</span>
             </div>
             <span id="slideIndicatorHeader" style="color: var(--text-muted); font-size: 0.78rem;">1 / 84</span>
           </div>
@@ -870,10 +1325,56 @@ def generate_player_html():
 
   <!-- FLOATING CTA BAR (MOBILE) -->
   <div class="mobile-floating-bar">
-    <a id="btnMobWhatsApp" href="https://wa.me/?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
+    <a id="btnMobWhatsApp" href="https://wa.me/554988110688?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
       <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
       <span>Responder no WhatsApp com Decisão</span>
     </a>
+  </div>
+
+  <!-- BACKDROP E POPOVER DE VELOCIDADE AVANÇADA (TSM) -->
+  <div id="speedMenuBackdrop" class="speed-menu-backdrop"></div>
+  <div id="speedMenu" class="speed-popover" role="dialog" aria-label="Opções de Velocidade de Reprodução">
+    <div class="speed-popover-header">
+      <div class="speed-popover-title">
+        <span>Velocidade de Reprodução</span>
+        <span class="pitch-badge" title="Time-Scale Modification (TSM): Preserva o tom natural da voz sem distorção">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+          Tom Natural Preservado
+        </span>
+      </div>
+      <button id="btnCloseSpeedMenu" class="speed-menu-close" title="Fechar menu">✕</button>
+    </div>
+
+    <!-- PRESETS RÁPIDOS (1-TOQUE) -->
+    <div class="speed-presets-grid">
+      <button type="button" class="speed-preset-btn" data-speed="0.5">0.5x</button>
+      <button type="button" class="speed-preset-btn" data-speed="0.75">0.75x</button>
+      <button type="button" class="speed-preset-btn active" data-speed="1.0">1.0x <span>Normal</span></button>
+      <button type="button" class="speed-preset-btn" data-speed="1.25">1.25x</button>
+      <button type="button" class="speed-preset-btn" data-speed="1.5">1.5x</button>
+      <button type="button" class="speed-preset-btn" data-speed="1.75">1.75x</button>
+      <button type="button" class="speed-preset-btn" data-speed="2.0">2.0x</button>
+      <button type="button" class="speed-preset-btn" data-speed="2.5">2.5x</button>
+    </div>
+
+    <!-- AJUSTE FINO CONTÍNUO (STEP 0.05x / 0.1x) -->
+    <div class="speed-stepper-row">
+      <div class="stepper-header">
+        <span>Ajuste de Precisão</span>
+        <span id="fineSpeedDisplay" class="fine-speed-display">1.00x</span>
+      </div>
+      <div class="stepper-controls">
+        <button type="button" id="btnSpeedMinus" class="stepper-btn" title="Diminuir 0.1x" aria-label="Diminuir velocidade">−</button>
+        <input type="range" id="speedSlider" min="0.5" max="3.0" step="0.05" value="1.0" class="speed-range-slider" aria-label="Controle deslizante de velocidade">
+        <button type="button" id="btnSpeedPlus" class="stepper-btn" title="Aumentar 0.1x" aria-label="Aumentar velocidade">+</button>
+      </div>
+    </div>
+
+    <!-- RODAPÉ E ATALHOS -->
+    <div class="speed-popover-footer">
+      <span class="speed-shortcut-hint">Atalhos: <b>&lt;</b> e <b>&gt;</b> ou <b>[</b> e <b>]</b></span>
+      <button type="button" id="btnResetSpeed" class="speed-reset-btn" title="Redefinir para 1.0x">Resetar (1.0x)</button>
+    </div>
   </div>
 
   <!-- FOOTER (DESKTOP) -->
@@ -882,8 +1383,11 @@ def generate_player_html():
       <button id="btnPrev" class="btn-ctrl">⏮️ Anterior</button>
       <button id="btnPlay" class="btn-ctrl primary">▶️ Reproduzir Áudio</button>
       <button id="btnNext" class="btn-ctrl">⏭️ Próximo</button>
-      <button id="btnSpeed" class="btn-speed" title="Alternar velocidade de fala">1.0x</button>
-      <button id="btnFullscreen" class="btn-ctrl" title="Expandir em Tela Cheia (F)">⛶ Tela Cheia</button>
+      <button id="btnSpeed" class="btn-speed" title="Velocidade de reprodução (Clique para menu ou use atalhos < e >)">
+        <span>⚡</span>
+        <span id="speedValue">1.0x</span>
+        <span class="speed-chevron">▾</span>
+      </button>
     </div>
 
     <div class="playback-info">
@@ -905,7 +1409,7 @@ def generate_player_html():
 
       <span class="desk-partner-note">Criado por Parceiro</span>
 
-      <a id="btnDeskWhatsApp" href="https://wa.me/?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
+      <a id="btnDeskWhatsApp" href="https://wa.me/554988110688?text=Ol%C3%A1!%20Assisti%20a%20apresenta%C3%A7%C3%A3o%20de%20vendas%20do%20BotConversa%20com%20o%20Tiago%20e%20gostaria%20de%20conversar%20sobre%20a%20minha%20decis%C3%A3o." target="_blank" class="whatsapp-cta-btn">
         <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
         <span>Falar no WhatsApp</span>
       </a>
@@ -918,7 +1422,17 @@ def generate_player_html():
     const slidesData = {slides_json};
     let currentIdx = 0;
     let currentSpeed = 1.0;
-    const speeds = [1.0, 1.25, 1.5, 2.0];
+    try {{
+      const savedSpeed = localStorage.getItem('botconversa_playback_speed');
+      if (savedSpeed) {{
+        const parsed = parseFloat(savedSpeed);
+        if (!isNaN(parsed) && parsed >= 0.5 && parsed <= 3.0) {{
+          currentSpeed = parsed;
+        }}
+      }}
+    }} catch (e) {{}}
+
+    const speedPresets = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5];
 
     // Elementos DOM
     const audioPlayer = document.getElementById('audioPlayer');
@@ -934,6 +1448,23 @@ def generate_player_html():
     const btnPrev = document.getElementById('btnPrev');
     const btnNext = document.getElementById('btnNext');
     const btnSpeed = document.getElementById('btnSpeed');
+    const speedValue = document.getElementById('speedValue');
+    const mobSpeedVal = document.getElementById('mobSpeedVal');
+    const fsSpeedVal = document.getElementById('fsSpeedVal');
+    const btnFsSpeed = document.getElementById('btnFsSpeed');
+    const speedMenu = document.getElementById('speedMenu');
+    const speedMenuBackdrop = document.getElementById('speedMenuBackdrop');
+    const btnCloseSpeedMenu = document.getElementById('btnCloseSpeedMenu');
+    const presetBtns = document.querySelectorAll('.speed-preset-btn');
+    const speedSlider = document.getElementById('speedSlider');
+    const fineSpeedDisplay = document.getElementById('fineSpeedDisplay');
+    const btnSpeedMinus = document.getElementById('btnSpeedMinus');
+    const btnSpeedPlus = document.getElementById('btnSpeedPlus');
+    const btnResetSpeed = document.getElementById('btnResetSpeed');
+    const speedOsd = document.getElementById('speedOsd');
+    const speedOsdText = document.getElementById('speedOsdText');
+    const fsPlayOsd = document.getElementById('fsPlayOsd');
+    const fsPlayOsdIcon = document.getElementById('fsPlayOsdIcon');
     const btnFullscreen = document.getElementById('btnFullscreen');
     const autoAdvanceCheckbox = document.getElementById('autoAdvance');
     const progressBar = document.getElementById('progressBar');
@@ -993,12 +1524,13 @@ def generate_player_html():
       scriptContent.scrollTop = 0;
 
       const slideTitleStr = `${{s.slide_number}}/84 • ${{s.title || 'Slide ' + s.slide_number}}`;
-      fsHudTitle.textContent = slideTitleStr;
+      if (fsHudTitle) fsHudTitle.textContent = slideTitleStr;
       mobileSlideCount.textContent = `Slide ${{s.slide_number}}/84`;
       slideIndicatorHeader.textContent = `${{s.slide_number}} / 84`;
 
       audioPlayer.src = `audios_tiago_2026/Slide_${{padAudio}}.mp3?v=2`;
       audioPlayer.playbackRate = currentSpeed;
+      enforcePitchPreservation();
 
       renderSlideList();
       const activeEl = slideList.children[idx];
@@ -1025,7 +1557,15 @@ def generate_player_html():
       const mobPlayText = isPlaying ? '⏸️ Pause' : '▶️ Play';
       btnPlay.textContent = playText;
       btnMobPlay.textContent = mobPlayText;
-      btnFsPlay.textContent = isPlaying ? '⏸️' : '▶️';
+      if (btnFsPlay) btnFsPlay.textContent = isPlaying ? '⏸️' : '▶️';
+
+      if (isPlaying) {{
+        btnPlay.classList.add('is-playing');
+        btnMobPlay.classList.add('is-playing');
+      }} else {{
+        btnPlay.classList.remove('is-playing');
+        btnMobPlay.classList.remove('is-playing');
+      }}
     }}
 
     function togglePlay() {{
@@ -1051,14 +1591,163 @@ def generate_player_html():
       }}
     }}
 
-    function cycleSpeed() {{
-      const currentSpeedIdx = speeds.indexOf(currentSpeed);
-      const nextIdx = (currentSpeedIdx + 1) % speeds.length;
-      currentSpeed = speeds[nextIdx];
+    // Feedback visual animado de Play / Pause no centro da tela cheia
+    let fsPlayOsdTimeout = null;
+    function showPlayPauseFeedback(isPlaying) {{
+      if (!fsPlayOsd || !fsPlayOsdIcon) return;
+      if (isPlaying) {{
+        fsPlayOsd.classList.remove('is-paused');
+        fsPlayOsdIcon.innerHTML = `
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="6 4 20 12 6 20 6 4"></polygon>
+          </svg>`;
+      }} else {{
+        fsPlayOsd.classList.add('is-paused');
+        fsPlayOsdIcon.innerHTML = `
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16" rx="1.5"></rect>
+            <rect x="14" y="4" width="4" height="16" rx="1.5"></rect>
+          </svg>`;
+      }}
+      fsPlayOsd.classList.add('visible');
+      if (fsPlayOsdTimeout) clearTimeout(fsPlayOsdTimeout);
+      fsPlayOsdTimeout = setTimeout(() => {{
+        fsPlayOsd.classList.remove('visible');
+      }}, 650);
+    }}
+
+    // Garantia de Preservação de Tom Digital (Time-Scale Modification - TSM)
+    function enforcePitchPreservation() {{
+      if (!audioPlayer) return;
+      audioPlayer.preservesPitch = true;
+      if ('webkitPreservesPitch' in audioPlayer) audioPlayer.webkitPreservesPitch = true;
+      if ('mozPreservesPitch' in audioPlayer) audioPlayer.mozPreservesPitch = true;
+    }}
+
+    let osdTimeout = null;
+    function triggerSpeedOsd(spd) {{
+      if (!speedOsd) return;
+      const formatted = spd.toFixed(spd % 1 === 0 ? 1 : 2) + 'x';
+      if (speedOsdText) speedOsdText.textContent = formatted;
+      speedOsd.classList.add('visible');
+      if (osdTimeout) clearTimeout(osdTimeout);
+      osdTimeout = setTimeout(() => {{
+        speedOsd.classList.remove('visible');
+      }}, 950);
+    }}
+
+    function applyPlaybackSpeed(speed, showOsd = true) {{
+      speed = Math.max(0.5, Math.min(3.0, Math.round(speed * 100) / 100));
+      currentSpeed = speed;
+
+      // 1. Aplicação nativa com Time-Scale Modification (TSM)
       audioPlayer.playbackRate = currentSpeed;
-      const speedStr = `${{currentSpeed.toFixed(currentSpeed === 1.0 ? 1 : 2)}}x`;
-      btnSpeed.textContent = speedStr;
-      btnMobSpeed.textContent = speedStr;
+      enforcePitchPreservation();
+
+      // 2. Persistência de preferência
+      try {{
+        localStorage.setItem('botconversa_playback_speed', currentSpeed.toString());
+      }} catch (e) {{}}
+
+      // 3. Atualização de todos os indicadores visuais
+      updateSpeedUI(currentSpeed);
+
+      // 4. Feedback OSD no slide
+      if (showOsd) {{
+        triggerSpeedOsd(currentSpeed);
+      }}
+    }}
+
+    function updateSpeedUI(spd) {{
+      const formatted = spd.toFixed(spd % 1 === 0 ? 1 : 2) + 'x';
+      const fineFormatted = spd.toFixed(2) + 'x';
+
+      if (speedValue) speedValue.textContent = formatted;
+      if (mobSpeedVal) mobSpeedVal.textContent = formatted;
+      if (fsSpeedVal) fsSpeedVal.textContent = formatted;
+      if (fineSpeedDisplay) fineSpeedDisplay.textContent = fineFormatted;
+      if (speedSlider) speedSlider.value = spd;
+
+      presetBtns.forEach(btn => {{
+        const bSpeed = parseFloat(btn.dataset.speed);
+        if (Math.abs(bSpeed - spd) < 0.04) {{
+          btn.classList.add('active');
+        }} else {{
+          btn.classList.remove('active');
+        }}
+      }});
+
+      if (spd !== 1.0) {{
+        btnSpeed.classList.add('speed-modified');
+        if (btnMobSpeed) btnMobSpeed.classList.add('speed-modified');
+        if (btnFsSpeed) btnFsSpeed.classList.add('speed-modified');
+      }} else {{
+        btnSpeed.classList.remove('speed-modified');
+        if (btnMobSpeed) btnMobSpeed.classList.remove('speed-modified');
+        if (btnFsSpeed) btnFsSpeed.classList.remove('speed-modified');
+      }}
+    }}
+
+    function openSpeedMenu(anchorEl) {{
+      if (anchorEl) {{
+        const rect = anchorEl.getBoundingClientRect();
+        const popoverWidth = 310;
+        const isMobile = window.innerWidth <= 850;
+
+        if (isMobile) {{
+          speedMenu.style.left = '50%';
+          speedMenu.style.transform = 'translateX(-50%)';
+          speedMenu.style.bottom = 'max(20px, env(safe-area-inset-bottom, 20px))';
+          speedMenu.style.top = 'auto';
+        }} else {{
+          let left = rect.left + (rect.width / 2) - (popoverWidth / 2);
+          if (left < 16) left = 16;
+          if (left + popoverWidth > window.innerWidth - 16) left = window.innerWidth - popoverWidth - 16;
+          speedMenu.style.left = `${{left}}px`;
+          speedMenu.style.bottom = `${{window.innerHeight - rect.top + 10}}px`;
+          speedMenu.style.top = 'auto';
+          speedMenu.style.transform = 'none';
+        }}
+      }}
+      speedMenu.classList.add('open');
+      speedMenuBackdrop.classList.add('active');
+      btnSpeed.classList.add('active');
+    }}
+
+    function closeSpeedMenu() {{
+      speedMenu.classList.remove('open');
+      speedMenuBackdrop.classList.remove('active');
+      btnSpeed.classList.remove('active');
+    }}
+
+    function toggleSpeedMenu(anchorEl) {{
+      if (speedMenu.classList.contains('open')) {{
+        closeSpeedMenu();
+      }} else {{
+        openSpeedMenu(anchorEl);
+      }}
+    }}
+
+    function stepSpeedPreset(dir) {{
+      let targetIdx = 0;
+      if (dir > 0) {{
+        const found = speedPresets.findIndex(s => s > currentSpeed + 0.02);
+        targetIdx = found !== -1 ? found : speedPresets.length - 1;
+      }} else {{
+        let found = -1;
+        for (let i = speedPresets.length - 1; i >= 0; i--) {{
+          if (speedPresets[i] < currentSpeed - 0.02) {{
+            found = i;
+            break;
+          }}
+        }}
+        targetIdx = found !== -1 ? found : 0;
+      }}
+      applyPlaybackSpeed(speedPresets[targetIdx], true);
+    }}
+
+    function cycleSpeed() {{
+      stepSpeedPreset(1);
     }}
 
     function openDrawer() {{
@@ -1095,8 +1784,15 @@ def generate_player_html():
     }});
 
     audioPlayer.addEventListener('loadedmetadata', () => {{
+      audioPlayer.playbackRate = currentSpeed;
+      enforcePitchPreservation();
       timeDuration.textContent = formatTime(audioPlayer.duration);
       if (mobTimeDuration) mobTimeDuration.textContent = formatTime(audioPlayer.duration);
+    }});
+
+    audioPlayer.addEventListener('play', () => {{
+      audioPlayer.playbackRate = currentSpeed;
+      enforcePitchPreservation();
     }});
 
     audioPlayer.addEventListener('ended', () => {{
@@ -1125,50 +1821,208 @@ def generate_player_html():
     btnPlay.addEventListener('click', togglePlay);
     btnPrev.addEventListener('click', () => prevSlide(true));
     btnNext.addEventListener('click', () => nextSlide(true));
-    btnSpeed.addEventListener('click', cycleSpeed);
+    
+    btnSpeed.addEventListener('click', (e) => {{
+      e.stopPropagation();
+      toggleSpeedMenu(btnSpeed);
+    }});
+    btnSpeed.addEventListener('contextmenu', (e) => {{
+      e.preventDefault();
+      cycleSpeed();
+    }});
 
     // Eventos Mobile
     btnMobPlay.addEventListener('click', togglePlay);
     btnMobPrev.addEventListener('click', () => prevSlide(true));
     btnMobNext.addEventListener('click', () => nextSlide(true));
-    btnMobSpeed.addEventListener('click', cycleSpeed);
+    btnMobSpeed.addEventListener('click', (e) => {{
+      e.stopPropagation();
+      toggleSpeedMenu(btnMobSpeed);
+    }});
+
+    if (btnFsSpeed) {{
+      btnFsSpeed.addEventListener('click', (e) => {{
+        e.stopPropagation();
+        cycleSpeed();
+      }});
+      btnFsSpeed.addEventListener('contextmenu', (e) => {{
+        e.preventDefault();
+        toggleSpeedMenu(btnFsSpeed);
+      }});
+    }}
+
+    if (btnCloseSpeedMenu) btnCloseSpeedMenu.addEventListener('click', closeSpeedMenu);
+    if (speedMenuBackdrop) speedMenuBackdrop.addEventListener('click', closeSpeedMenu);
+
+    presetBtns.forEach(btn => {{
+      btn.addEventListener('click', () => {{
+        const spd = parseFloat(btn.dataset.speed);
+        applyPlaybackSpeed(spd, true);
+        closeSpeedMenu();
+      }});
+    }});
+
+    if (speedSlider) {{
+      speedSlider.addEventListener('input', (e) => {{
+        const val = parseFloat(e.target.value);
+        applyPlaybackSpeed(val, false);
+      }});
+      speedSlider.addEventListener('change', (e) => {{
+        const val = parseFloat(e.target.value);
+        applyPlaybackSpeed(val, true);
+      }});
+    }}
+
+    if (btnSpeedMinus) {{
+      btnSpeedMinus.addEventListener('click', () => {{
+        applyPlaybackSpeed(currentSpeed - 0.1, true);
+      }});
+    }}
+
+    if (btnSpeedPlus) {{
+      btnSpeedPlus.addEventListener('click', () => {{
+        applyPlaybackSpeed(currentSpeed + 0.1, true);
+      }});
+    }}
+
+    if (btnResetSpeed) {{
+      btnResetSpeed.addEventListener('click', () => {{
+        applyPlaybackSpeed(1.0, true);
+        closeSpeedMenu();
+      }});
+    }}
     btnMobileDrawer.addEventListener('click', openDrawer);
     btnCloseSidebar.addEventListener('click', closeDrawer);
     drawerBackdrop.addEventListener('click', closeDrawer);
 
-    // Fullscreen Handlers
+    // Fullscreen limpo e sem avisos intrusivos do navegador
     function toggleFullscreen() {{
-      if (!document.fullscreenElement && !document.webkitFullscreenElement) {{
-        if (visualBox.requestFullscreen) {{
-          visualBox.requestFullscreen();
-        }} else if (visualBox.webkitRequestFullscreen) {{
-          visualBox.webkitRequestFullscreen();
-        }}
+      const isFs = visualBox.classList.contains('is-fullscreen') || document.fullscreenElement || document.webkitFullscreenElement;
+      if (!isFs) {{
+        visualBox.classList.add('is-fullscreen');
       }} else {{
-        if (document.exitFullscreen) {{
-          document.exitFullscreen();
-        }} else if (document.webkitExitFullscreen) {{
-          document.webkitExitFullscreen();
+        visualBox.classList.remove('is-fullscreen');
+        if (document.fullscreenElement || document.webkitFullscreenElement) {{
+          if (document.exitFullscreen) {{
+            document.exitFullscreen().catch(() => {{}});
+          }} else if (document.webkitExitFullscreen) {{
+            document.webkitExitFullscreen();
+          }}
         }}
       }}
     }}
 
-    btnFullscreen.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', () => {{
+      if (!document.fullscreenElement) {{
+        visualBox.classList.remove('is-fullscreen');
+      }}
+    }});
+    document.addEventListener('webkitfullscreenchange', () => {{
+      if (!document.webkitFullscreenElement) {{
+        visualBox.classList.remove('is-fullscreen');
+      }}
+    }});
+
+    if (btnFullscreen) btnFullscreen.addEventListener('click', toggleFullscreen);
     btnFsToggle.addEventListener('click', toggleFullscreen);
-    btnFsExit.addEventListener('click', toggleFullscreen);
+    if (btnFsExit) btnFsExit.addEventListener('click', toggleFullscreen);
     if (btnMobFs) btnMobFs.addEventListener('click', toggleFullscreen);
     visualBox.addEventListener('dblclick', toggleFullscreen);
 
-    btnFsPrev.addEventListener('click', () => prevSlide(true));
-    btnFsNext.addEventListener('click', () => nextSlide(true));
-    btnFsPlay.addEventListener('click', togglePlay);
+    if (btnFsPrev) btnFsPrev.addEventListener('click', () => prevSlide(true));
+    if (btnFsNext) btnFsNext.addEventListener('click', () => nextSlide(true));
+    if (btnFsPlay) btnFsPlay.addEventListener('click', togglePlay);
 
-    // Atalhos de Teclado
+    // Navegação por gestos de deslize (swipe) e toque na tela para Pausar / Reproduzir em tela cheia
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let isSwiping = false;
+    let lastTouchTapTime = 0;
+
+    visualBox.addEventListener('touchstart', (e) => {{
+      if (e.touches.length === 1) {{
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        isSwiping = false;
+      }}
+    }}, {{ passive: true }});
+
+    visualBox.addEventListener('touchmove', (e) => {{
+      if (e.touches.length === 1) {{
+        const diffX = Math.abs(e.touches[0].clientX - touchStartX);
+        const diffY = Math.abs(e.touches[0].clientY - touchStartY);
+        if (diffX > 15 || diffY > 15) {{
+          isSwiping = true;
+        }}
+      }}
+    }}, {{ passive: true }});
+
+    visualBox.addEventListener('touchend', (e) => {{
+      // Ignorar toques sobre botões de controle e menus interativos
+      if (e.target.closest('#btnFsExit') || e.target.closest('#btnFsSpeed') || e.target.closest('#btnFsToggle') || e.target.closest('#speedMenu')) {{
+        return;
+      }}
+
+      if (e.changedTouches.length === 1) {{
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        const touchDuration = Date.now() - touchStartTime;
+
+        // Se foi um deslize horizontal (> 40px), avança ou volta o slide
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {{
+          if (diffX < 0) {{
+            nextSlide(true);
+          }} else {{
+            prevSlide(true);
+          }}
+          return;
+        }}
+
+        // Se foi um toque simples na tela (tap) sem arrasto E em Tela Cheia:
+        const isFs = visualBox.classList.contains('is-fullscreen') || document.fullscreenElement || document.webkitFullscreenElement;
+        if (isFs && !isSwiping && touchDuration < 380 && Math.abs(diffX) < 15 && Math.abs(diffY) < 15) {{
+          lastTouchTapTime = Date.now();
+          const willPlay = audioPlayer.paused;
+          togglePlay();
+          showPlayPauseFeedback(willPlay);
+        }}
+      }}
+    }}, {{ passive: true }});
+
+    // Clique com mouse / trackpad no desktop em tela cheia para Pausar / Reproduzir
+    visualBox.addEventListener('click', (e) => {{
+      if (e.target.closest('#btnFsExit') || e.target.closest('#btnFsSpeed') || e.target.closest('#btnFsToggle') || e.target.closest('#speedMenu')) {{
+        return;
+      }}
+      // Evita duplo disparo provocado por emulação de clique após touch
+      if (Date.now() - lastTouchTapTime < 500) {{
+        return;
+      }}
+
+      const isFs = visualBox.classList.contains('is-fullscreen') || document.fullscreenElement || document.webkitFullscreenElement;
+      if (isFs) {{
+        const willPlay = audioPlayer.paused;
+        togglePlay();
+        showPlayPauseFeedback(willPlay);
+      }}
+    }});
+
+    // Atalhos de Teclado Avançados
     window.addEventListener('keydown', (e) => {{
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      // Ignorar se estiver interagindo com controles de formulário exceto teclas de atalho do player
+      if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return;
+      if (e.target.tagName === 'TEXTAREA') return;
+
       if (e.code === 'Space') {{
         e.preventDefault();
+        const willPlay = audioPlayer.paused;
         togglePlay();
+        const isFs = visualBox.classList.contains('is-fullscreen') || document.fullscreenElement || document.webkitFullscreenElement;
+        if (isFs) {{
+          showPlayPauseFeedback(willPlay);
+        }}
       }} else if (e.code === 'ArrowRight') {{
         e.preventDefault();
         nextSlide(true);
@@ -1178,10 +2032,39 @@ def generate_player_html():
       }} else if (e.code === 'KeyF') {{
         e.preventDefault();
         toggleFullscreen();
+      }} else if (e.code === 'Escape' || e.key === 'Escape') {{
+        if (speedMenu && speedMenu.classList.contains('open')) {{
+          e.preventDefault();
+          closeSpeedMenu();
+          return;
+        }}
+        if (visualBox.classList.contains('is-fullscreen') || document.fullscreenElement) {{
+          e.preventDefault();
+          toggleFullscreen();
+        }}
+      }} else if (e.key === '>' || (e.shiftKey && (e.key === '.' || e.code === 'Period'))) {{
+        e.preventDefault();
+        stepSpeedPreset(1);
+      }} else if (e.key === '<' || (e.shiftKey && (e.key === ',' || e.code === 'Comma'))) {{
+        e.preventDefault();
+        stepSpeedPreset(-1);
+      }} else if (e.key === ']' || e.code === 'BracketRight') {{
+        e.preventDefault();
+        applyPlaybackSpeed(currentSpeed + 0.1, true);
+      }} else if (e.key === '[' || e.code === 'BracketLeft') {{
+        e.preventDefault();
+        applyPlaybackSpeed(currentSpeed - 0.1, true);
+      }} else if (e.code === 'KeyS' && !e.ctrlKey && !e.metaKey) {{
+        e.preventDefault();
+        toggleSpeedMenu(btnSpeed);
+      }} else if (e.code === 'KeyR' && !e.ctrlKey && !e.metaKey) {{
+        e.preventDefault();
+        applyPlaybackSpeed(1.0, true);
       }}
     }});
 
-    // Inicialização
+    // Inicialização com velocidade salva e pitch garantido
+    applyPlaybackSpeed(currentSpeed, false);
     loadSlide(0, false);
   </script>
 </body>
@@ -1191,7 +2074,10 @@ def generate_player_html():
     with open('Player_Apresentacao_Tiago_2026.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
 
-    print('Player_Apresentacao_Tiago_2026.html gerado com sucesso com visual BotConversa oficial e suporte Mobile!')
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(html_content)
+
+    print('Player_Apresentacao_Tiago_2026.html e index.html gerados com sucesso com velocidade TSM avançada!')
 
 if __name__ == '__main__':
     generate_player_html()
